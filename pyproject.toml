@@ -6,10 +6,15 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.115.12",
+    "passlib>=1.7.4",
     "pydantic-settings>=2.9.1",
+    "pyjwt>=2.10.1",
     "uvicorn>=0.34.2",
 ]
 
+[tool.ruff]
+line-length = 120
+src = ["app"]
 # rooles: https://docs.astral.sh/ruff/rules/
 select = [
 	"E",    # pycodestyle errors
