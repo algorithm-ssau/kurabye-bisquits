@@ -18,5 +18,12 @@ class HostSettings(ModelConfig):
     port: int = Field(default=8000, validation_alias="APP_PORT")
 
 
+class AuthSettings(ModelConfig):
+    secret_key: str = Field(default="my-cool-secret-key", validation_alias="APP_SECRET_KEY")
+    algorithm: str = Field(default="HS256", validation_alias="APP_ALGORITHM")
+    access_token_expire_minutes: int = Field(default=30, validation_alias="APP_ACCESS_TOKEN_EXPIRE_MINUTES")
+
+
 # create config instances
 host_settings = HostSettings()
+auth_settings = AuthSettings()
