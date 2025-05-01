@@ -5,3 +5,35 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
+
+# rooles: https://docs.astral.sh/ruff/rules/
+select = [
+	"E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "C",    # flake8-comprehensions
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "UP",   # pyupgrade
+    "N",    # pep8-naming
+	"UP",   # pyupgrade
+	"N",    # pep8-naming
+	"ERA",  # found commented-out code
+	"D401", # check docstring format
+]
+
+ignore = [
+ "B008",    # ruff swears at depends in the func
+]
+exclude = [".venv", ".git", "__pycache__", "build", "dist"]
+
+[tool.black]
+# Black is disabled by omitting its configuration here.
+
+[tool.pyright]
+# Delete if you dont have mistakes
+executionEnvironments = [{ root = "src" }]
+typeCheckingMode = "standard"
+venv = "./.venv"
+venvPath = "."
