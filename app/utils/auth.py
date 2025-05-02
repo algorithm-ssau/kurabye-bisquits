@@ -4,11 +4,11 @@ from jwt import encode as jwt_encode
 from passlib.context import CryptContext
 
 from core.config import auth_settings
-from schemas.user import User
+from domain.entities.user import User
 
 SECRET_KEY = auth_settings.secret_key
 ALGORITHM = auth_settings.algorithm
-DEFAULT_EXPIRE_MINUTES = 15
+DEFAULT_EXPIRE_MINUTES = auth_settings.access_token_expire_minutes
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
