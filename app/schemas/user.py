@@ -30,7 +30,7 @@ class UserCreateSchema(BaseModel):
     def check_password_complexity(cls, password, requires_chars=punctuation) -> str:
         if not any(char in password for char in requires_chars):
             raise ValueError(
-                f"Your password must containts at least one specifick symbol. Specific symbols: {punctuation}"
+                f"Your password must contains at least one specifick symbol. Specific symbols: {punctuation}"
             )
         return password
 

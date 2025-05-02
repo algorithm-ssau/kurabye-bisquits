@@ -1,0 +1,20 @@
+from pydantic import BaseModel, Field
+
+from app.domain.enums import ProductCalculus
+
+
+class Product(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    product_image: str
+    price: float
+    calculus: ProductCalculus = Field(default=ProductCalculus.IN_PACKAGES)
+    quantity: int = Field(gt=0, default=1)
+
+
+class ProductFullInfo(Product):
+    description: str
+    composition: list
+    energy: int  # kJ/kcal
+    fats: int
+    carbohydrates: int
+    proteins: int
