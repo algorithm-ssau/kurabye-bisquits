@@ -4,8 +4,20 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "asyncpg>=0.30.0",
+    "fastapi>=0.115.12",
+    "passlib[bcrypt]>=1.7.4",
+    "pydantic-settings>=2.9.1",
+    "pyjwt>=2.10.1",
+    "python-multipart>=0.0.20",
+    "sqlalchemy>=2.0.40",
+    "uvicorn>=0.34.2",
+]
 
+[tool.ruff]
+line-length = 120
+src = ["app"]
 # rooles: https://docs.astral.sh/ruff/rules/
 select = [
 	"E",    # pycodestyle errors
@@ -22,7 +34,7 @@ select = [
 	"ERA",  # found commented-out code
 	"D401", # check docstring format
 ]
-
+unfixable = ["F401"]
 ignore = [
  "B008",    # ruff swears at depends in the func
 ]
