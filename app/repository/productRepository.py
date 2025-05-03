@@ -19,5 +19,5 @@ class ProductRepository(AbstractProductRepository):
         pass
 
 
-def get_user_repository(self, session: AsyncSession = Depends(db_helper.session_dependency)):
+def get_product_repository(self, session: AsyncSession = Depends(db_helper.session_dependency)):
     return ProductRepository(session=session)

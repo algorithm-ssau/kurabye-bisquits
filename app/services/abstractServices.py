@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from app.domain.entities.product import Product
+from domain.entities.product import Product
 
 
 class AbstractProductService(ABC):
