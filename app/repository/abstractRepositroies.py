@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from app.schemas.user import UserResponseSchema
 from domain.entities.product import Product
+from schemas.user import UserResponseSchema
 
 
 class AbstractUserRepository(ABC):
