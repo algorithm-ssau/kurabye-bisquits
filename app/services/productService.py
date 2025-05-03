@@ -3,13 +3,14 @@ from uuid import UUID
 from fastapi import Depends
 
 from domain.entities.product import Product
+from repository.abstractRepositroies import AbstractProductRepository
 from repository.fake.productRepository import get_product_repository
 from services.abstractServices import AbstractProductService
 
 
 class ProductService(AbstractProductService):
     def __init__(self, product_repository):
-        self.__product_repository = product_repository
+        self.__product_repository: AbstractProductRepository = product_repository
 
     async def get_product(self, product_id: UUID) -> Product | None:
         return await self.__product_repository.get_product(product_id)
@@ -18,5 +19,5 @@ class ProductService(AbstractProductService):
         return await self.__product_repository.get_products(limit=limit, offset=offset)
 
 
-def get_product_service(product_repository=Depends(get_product_repository)) -> ProductService:
+def get_product_service(product_repository=Depends(get_product_repository)) -> AbstractProductService:
     return ProductService(product_repository=product_repository)

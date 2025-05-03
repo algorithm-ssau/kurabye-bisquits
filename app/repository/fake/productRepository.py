@@ -1,7 +1,7 @@
+from collections import defaultdict
 from uuid import UUID
 
 from fastapi import Depends
-from sqlalchemy.util import defaultdict
 
 from domain.entities.compositionElement import CompositionELement
 from domain.entities.product import Product, ProductFullInfo
