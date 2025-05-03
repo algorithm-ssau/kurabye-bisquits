@@ -58,7 +58,7 @@ class ProductRepository(AbstractProductRepository):
         return fake_products[product_id]
 
     async def get_products(self, limit: int = 10, offset: int = 0) -> list[Product] | None:
-        return fake_products_list[offset:limit] if fake_products_list else None
+        return fake_products_list[offset : offset + limit] if fake_products_list else None
 
 
 get_session = lambda: None  # noqa: E731
