@@ -1,0 +1,213 @@
+main {
+  padding-left: 10vh;
+  color: #683C1A;
+  font-size: 1.5rem;
+}
+
+.titleProduct {
+  position: relative;
+  color: #683C1A;
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding-top: 10vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 20px;
+  background-color: #F3E3D3;
+  border-radius: 20px;
+}
+
+.left-part,
+.right-part {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-photo {
+  background-color: #FFFDF6;
+  border-radius: 20px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.product-photo img {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.product-description {
+  margin-top: 0px;
+  color: #683C1A;
+  font-size: 1.5rem;
+
+}
+
+.product-details {
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #683C1A;
+}
+
+.price-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+
+}
+
+.price-list li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.price-text {
+  margin-bottom: 10px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.counter {
+  font-size: 23px;
+  /* Размер шрифта для счетчика */
+  font-weight: 500;
+  margin: 5px 0px;
+  /* Добавляем отступы слева и справа */
+}
+
+.price-list button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.price-list button img {
+  width: 30px;
+  height: 30px;
+}
+
+.add-to-cart {
+  background-color: #683C1A;
+  color: #FFFDF6;
+  font-family: 'JoNova', sans-serif;
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.nutrients {
+  margin-top: 30px;
+  color: #683C1A;
+  font-size: 1.2rem;
+
+}
+
+.nutrients p {
+  font-weight: 500;
+}
+
+.footer {
+  padding-right: 20vh;
+  padding-left: 10vh;
+  padding-bottom: 10vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* ровно 3 колонки */
+  gap: 50px 50px;
+  margin-top: 40px
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    padding-right: 10vh;
+    padding-left: 0vh;
+  }
+}
+
+.product-card {
+  color: #683C1A;
+  font-size: 1.5rem;
+  background-color: #F3E3D3;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.product-title {
+  color: #683C1A;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  text-align: left;
+}
+
+.product-card img {
+  width: 100%;
+  max-width: 120px;
+  margin: 0 auto;
+}
+
+.product-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* распределяет слева и справа */
+  padding: 0 5px;
+}
+
+.product-info {
+  background-color: #FFFDF6;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: #683C1A;
+  padding: 8px 30px;
+  margin: 0;
+}
+
+.cart-icon {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
