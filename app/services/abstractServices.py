@@ -17,13 +17,13 @@ class AbstractProductService(ABC):
 
 class AbstractCartService(ABC):
     @abstractmethod
-    async def get_cart(self, card_id: UUID) -> Cart | None:
+    async def get_cart(self, cart_id: UUID) -> Cart | None:
         pass
 
     @abstractmethod
-    async def add_product_to_cart(self, cart_id: UUID, product_id: UUID, quantity: int = 1) -> bool:
+    async def add_product_to_cart(self, cart_id: UUID, product_id: UUID, product_quantity: int = 1) -> bool:
         pass
 
     @abstractmethod
-    async def delete_product_from_cart(self, cart_id: UUID, product_id, quantity: None | int = None) -> bool:
+    async def delete_product_from_cart(self, cart_id: UUID, product_id, product_quantity: None | int = None) -> bool:
         pass

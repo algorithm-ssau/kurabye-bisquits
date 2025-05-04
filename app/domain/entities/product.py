@@ -13,6 +13,9 @@ class Product(BaseModel):
     calculus: ProductCalculus = Field(default=ProductCalculus.IN_PACKAGES)
     quantity: int = Field(gt=0, default=1)
 
+    def __hash__(self):
+        return hash(self.product_id)
+
 
 class ProductFullInfo(Product):
     description: str | None = Field(default=None, description="The information about the project.")

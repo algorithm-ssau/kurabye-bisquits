@@ -12,8 +12,8 @@ class CartService(AbstractCartService):
     def __init__(self, cart_repository):
         self.__cart_repository: AbstractCartRepository = cart_repository
 
-    async def get_cart(self, card_id: UUID) -> Cart | None:
-        pass
+    async def get_cart(self, cart_id: UUID) -> Cart | None:
+        return await self.__cart_repository.get_cart(cart_id=cart_id)
 
     async def add_product_to_cart(self, cart_id: UUID, product_id: UUID, product_quantity: int = 1) -> bool:
         # TODO: check that product exists and quantity of product in the warehouse > 0
@@ -23,8 +23,12 @@ class CartService(AbstractCartService):
             product_quantity=product_quantity,
         )
 
-    async def delete_product_from_cart(self, cart_id: UUID, product_id, quantity: None | int = None) -> bool:
-        return False
+    async def delete_product_from_cart(self, cart_id: UUID, product_id, product_quantity: None | int = None) -> bool:
+        return await self.__cart_repository.delete_product_from_cart(
+            cart_id=cart_id,
+            product_id=product_id,
+            product_quantity=product_quantity,
+        )
 
 
 def get_cart_service(cart_repository=Depends(get_cart_repository)):

@@ -4,7 +4,12 @@ from uvicorn import run as uvicorn_run
 from api.v1.routes import routers as api_v1_routes
 from core.config import host_settings  # host configuration
 
-app = FastAPI()
+app = FastAPI(
+    servers=[
+        {"url": "api/v1", "description": "Staging environment"},
+        {"url": "api/v2", "description": "Production environment"},
+    ],
+)
 app.include_router(api_v1_routes)
 
 if __name__ == "__main__":

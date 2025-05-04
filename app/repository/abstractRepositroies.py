@@ -24,7 +24,7 @@ class AbstractProductRepository(ABC):
 
 class AbstractCartRepository(ABC):
     @abstractmethod
-    async def get_cart(self, card_id: UUID) -> Cart | None:
+    async def get_cart(self, cart_id: UUID) -> Cart | None:
         pass
 
     @abstractmethod
@@ -32,5 +32,5 @@ class AbstractCartRepository(ABC):
         pass
 
     @abstractmethod
-    async def delete_product_from_cart(self, cart_id: UUID, product_id, quantity: None | int = None) -> bool:
+    async def delete_product_from_cart(self, cart_id: UUID, product_id, product_quantity: None | int = None) -> bool:
         pass

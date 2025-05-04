@@ -67,7 +67,7 @@ fake_products_list = [
     ),
 ]
 
-fake_products: dict[UUID, Product | None] = defaultdict(None)
+fake_products: dict[UUID, Product | None] = defaultdict(lambda: None)
 for product in fake_products_list:
     fake_products[product.product_id] = product
 

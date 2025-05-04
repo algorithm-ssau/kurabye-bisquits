@@ -1,16 +1,14 @@
+from collections import defaultdict
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from domain.entities.product import Product
 
 
-class CartItem(BaseModel):
-    product: Product
-    product_quantity: int = Field(gt=0, default=1)
-
-
 class Cart(BaseModel):
-    user_id: UUID
-    cart_id: UUID
-    items: list[CartItem] = []
+    cart_id: UUID  # cart_id alias of user_id. Cart is the data, that expands user data.
+    items: defaultdict[Product, int] = defaultdict(int)
+
+    def __contains__(self, item):
+        return item in self.items
