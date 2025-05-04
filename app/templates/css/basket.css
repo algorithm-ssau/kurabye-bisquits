@@ -1,0 +1,85 @@
+main {
+  padding-left: 10vh;
+  color: #683C1A;
+  font-size: 1.5rem;
+}
+
+.titleBasket {
+  position: relative;
+  color: #683C1A;
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding-top: 10vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.order-table {
+  flex: 1;
+  background: #F3E3D3;
+  padding: 20px;
+  border-radius: 20px;
+
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background: #F3E3D3;
+  padding: 10px;
+  text-align: left;
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px dashed #683C1A;
+}
+
+tfoot .total td {
+  font-weight: bold;
+  font-size: 1.1em;
+  border-top: 2px solid #683C1A;
+  padding-top: 10px;
+  letter-spacing: 1px;
+}
+
+.order-info {
+  width: 300px;
+  background: #F3E3D3;
+  padding: 20px;
+  border-radius: 20px;
+
+}
+
+.order-info h2 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+button {
+  background-color: #683C1A;
+  color: #FFFDF6;
+  font-family: 'JoNova', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
