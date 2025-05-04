@@ -1,0 +1,27 @@
+section.contacts {
+  background-color: #FFFDF6;
+  padding-left: 10vh;
+  padding-right: 10vh;
+  padding-bottom: 5vh;
+  font-family: 'JoNova', sans-serif;
+  color: #683C1A;
+}
+
+.titleContacts {
+  position: relative;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #683C1A;
+}
+
+.contacts-content p {
+  font-size: 1.3rem;
+  margin: 6px 0;
+}
+
+.map-container {
+  margin-top: 30px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #683C1A;
+}
