@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<link rel="stylesheet" type="text/css" href="css/order.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/fonts.css">
+<link rel="stylesheet" type="text/css" href="css/header.css">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Овсяное печенье</title>
+  <link rel="icon" type="image/png" href="icon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="icon/favicon.svg" />
+  <link rel="shortcut icon" href="icon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+  <link rel="manifest" href="/site.webmanifest" />
+</head>
+
+<body>
+  <header class="header">
+    <ul>
+      <li><a href="index.html#main">Главная</a></li>
+      <li><a href="index.html#catalog">Каталог</a></li>
+      <li><a href="index.html#contacts">Контакты</a></li>
+    </ul>
+    <a href="basket.html">
+      <img src="img/cart.svg" alt="корзина" class="cart-icon">
+    </a>
+  </header>
+  <main>
+    <h1 class="titleOrder">Оформление заказа</h1>
+    <section class="container">
+      <div class="left-part">
+        <div class="form-row">
+          <label for="name">ФИО</label>
+          <input type="text" id="name" placeholder="Иванов Иван Иванович">
+        </div>
+
+        <div class="form-row">
+          <label for="phone">Email</label>
+          <input type="tel" id="phone" placeholder="example@yandex.ru">
+        </div>
+
+        <div class="form-row">
+          <label for="phone">Телефон</label>
+          <input type="tel" id="phone" placeholder="+7 (999) 123-45-67">
+        </div>
+
+        <div class="form-row">
+          <label for="phone">Адрес</label>
+          <input type="tel" id="phone" placeholder="366000, г. Самара, ул. Мичурина, д.42">
+        </div>
+
+        <div class="form-row">
+          <label>Способ доставки</label>
+          <button type="button">Выбрать доставку</button>
+        </div>
+
+        <div class="form-row full-width">
+          <span>Выбор оплаты</span>
+        </div>
+
+        <div class="form-row payment-options">
+          <button type="button">Картой</button>
+          <button type="button">Наличными</button>
+        </div>
+      </div>
+      <div class="order-info">
+        <h2>Информация к заказу:</h2>
+      </div>
+    </section>
+  </main>
+  <div class="footer">
+    <button class="submit-btn">ПОДТВЕРДИТЬ ЗАКАЗ</button>
+  </div>
+</body>
+
+</html>
