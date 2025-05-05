@@ -5,10 +5,12 @@ from api.v1.routes import routers as api_v1_routes
 from core.config import (
     host_settings,  # host configuration
     log_setting,
+    sentry_config,
 )
 
 log = log_setting.get_configure_logging(__name__)
 
+sentry_config.run_sentry()
 
 app = FastAPI()
 

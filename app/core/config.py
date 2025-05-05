@@ -8,6 +8,8 @@ from pydantic_settings.main import SettingsConfigDict
 
 from core.logging.filters import ColorFilter, SensitiveWordsFilter
 
+from sentry_sdk import init as sentry_init
+
 
 class ModelConfig(BaseSettings):
     model_config = SettingsConfigDict(
@@ -120,9 +122,19 @@ class LoggingSettings(ModelConfig):
             )
         return logger
 
+class SentryConfiguration(ModelConfig):
+
+    sentry_dsn: str = Field(default="my-sentry-dsn", validation_alias="SENTRY_DSN")
+
+    def run_sentry(self):
+        sentry_init(
+            dsn=self.sentry_dsn
+        )
+
 
 # create config instances
 host_settings = HostSettings()
 auth_settings = AuthSettings()
 db_settings = DBSettings()
 log_setting = LoggingSettings()
+sentry_config = SentryConfiguration()
