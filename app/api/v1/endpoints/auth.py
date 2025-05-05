@@ -1,9 +1,10 @@
+from pathlib import Path
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from core.config import auth_settings
+from core.config import auth_settings, log_setting
 from domain.entities.user import User, UserWithCreds
 from schemas.token import TokenResponseSchema
 from schemas.user import UserAuthSchema, UserCreateSchema
@@ -12,6 +13,9 @@ from utils.auth import create_jwt, hash_password, verify_password
 SECRET_KEY = auth_settings.secret_key
 ALGORITHM = auth_settings.algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = auth_settings.access_token_expire_minutes
+
+log = log_setting.get_configure_logging(filename=Path(__file__).stem)
+
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -43,8 +47,10 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     if not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     # create user model
+
     user_without_password = User(**user.model_dump())
     access_token = create_jwt(user_without_password)
+    log.info("User %s successfully get JWT.", user.user_id)
     return TokenResponseSchema(access_token=access_token, token_type="bearer")
 
 
@@ -62,6 +68,7 @@ async def add_user(user_in: UserCreateSchema):
         # Authorize user
         user_without_password = User(**user.model_dump())
         access_token = create_jwt(user_without_password)
+        log.info("User %s successfully registered and gets JWT.", user.user_id)
         return TokenResponseSchema(access_token=access_token, token_type="bearer")
     except ValueError as error:
         return HTTPException(detail=error, status_code=403)
