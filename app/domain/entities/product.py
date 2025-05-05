@@ -13,11 +13,14 @@ class Product(BaseModel):
     calculus: ProductCalculus = Field(default=ProductCalculus.IN_PACKAGES)
     quantity: int = Field(gt=0, default=1)
 
+    def __hash__(self):
+        return hash(self.product_id)
+
 
 class ProductFullInfo(Product):
-    description: str
-    composition: list
-    energy: int  # kJ/kcal
-    fats: int
-    carbohydrates: int
-    proteins: int
+    description: str | None = Field(default=None, description="The information about the project.")
+    composition: list = Field(description="The composition of the product, e.g.: milk, sugar and etc.")
+    energy: int = Field(description="The energy of the product of the 100 grams, e.g. 100kCal")
+    fats: int | None = Field(default=None)
+    carbohydrates: int | None = Field(default=None)
+    proteins: int | None = Field(default=None)

@@ -1,8 +1,9 @@
 from http import HTTPStatus
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from schemas.product import ProductQueryParams, ProductResponseSchema
+from schemas.product import ProductFullResponseSchema, ProductQueryParams, ProductResponseSchema
 from services.productService import ProductService, get_product_service
 
 router = APIRouter(prefix="/product", tags=["Products"])
@@ -25,3 +26,15 @@ async def get_products(
         return products
 
     raise HTTPException(status_code=404, detail="The products hasn't founded.")
+
+
+@router.get("/{product_id}", response_model=ProductFullResponseSchema)
+async def get_product(
+    product_id: UUID,
+    product_service: ProductService = Depends(get_product_service),
+):
+    product = await product_service.get_product(product_id)
+    if product:
+        return product
+
+    raise HTTPException(status_code=404, detail="The product hasn't founded.")

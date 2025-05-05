@@ -1,3 +1,7 @@
+from logging import INFO, Logger, basicConfig, getLogger
+from logging.handlers import TimedRotatingFileHandler
+from os import mkdir, path
+
 from pydantic import Field
 from pydantic_settings import BaseSettings
 from pydantic_settings.main import SettingsConfigDict
@@ -43,7 +47,50 @@ class DBSettings(ModelConfig):
         )
 
 
+class LoggingSettings(ModelConfig):
+    # Documentation: https://docs.python.org/3/library/logging.html
+    log_directory: str = Field(default="/logs", validation_alias="LOG_DIRECTORY")
+    date_format: str = Field(default="%Y-%m-%d %H:%M:%S", validation_alias="DATE_FORMAT")
+    log_format: str = Field(
+        default="[%(asctime)s.%(msecs)03d] %(module)10s:%(lineno)-3d %(levelname)-7s - %(message)s",
+        validation_alias="LOG_FORMAT",
+    )
+    log_roating: str = Field(default="midnight", validation_alias="LOG_ROATING")
+    backup_count: int = Field(
+        default=30,
+        validation_alias="BACKUP_COUNT",
+        description="Interval of backup/roating logs. Default 30 midnites. 31st log will ovverides the first log.",
+    )
+    utc: bool = Field(default=True, validation_alias="LOG_UTC")
+
+    def get_configure_logging(
+        self,
+        filename: str,
+        level=INFO,
+    ) -> Logger:
+        logger = getLogger(filename)
+        if not path.isdir(self.log_directory):
+            mkdir(self.log_directory)
+
+        handler = TimedRotatingFileHandler(
+            filename=f"{self.log_directory}/log_{filename}",
+            when=self.log_roating,
+            backupCount=self.backup_count,
+            utc=self.utc,
+        )
+
+        basicConfig(
+            level=level,
+            handlers=[handler],
+            datefmt=self.date_format,
+            format=self.log_format,
+        )
+
+        return logger
+
+
 # create config instances
 host_settings = HostSettings()
 auth_settings = AuthSettings()
 db_settings = DBSettings()
+log_setting = LoggingSettings()
