@@ -5,14 +5,35 @@ main {
   font-size: 1.5rem;
 }
 
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
 .titleOrder {
   position: relative;
-  color: #683C1A;
+  color: var(--myColor);
   font-size: 2.5rem;
   font-weight: 700;
   padding-top: 10vh;
 }
 
+.bisquit {
+  margin-top: 50px;
+  width: 7%;
+  height: auto;
+  max-width: 100%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .bisquit {
+    display: none;
+  }
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -82,7 +103,7 @@ h2 {
 }
 
 .form-row button:hover {
-  background-color: #683C1A;
+  box-shadow: 0 0 15px rgba(150, 87, 9, 0.9);
 }
 
 .dropdown {
@@ -111,8 +132,8 @@ h2 {
   overflow: hidden;
   transition: max-height 0.4s ease;
   position: absolute;
-  top: 0;
-  left: 100%;
+  top: -10px;
+  left: 102%;
   background-color: #FFFDF6;
   font-weight: 500;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -173,7 +194,7 @@ h2 {
 }
 
 button {
-  background-color: #683C1A;
+  background-color: var(--myColor);
   color: #FFFDF6;
   font-family: 'JoNova', sans-serif;
   font-weight: 700;
