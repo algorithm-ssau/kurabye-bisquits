@@ -1,5 +1,6 @@
 from logging import Filter
 
+
 class ColorFilter(Filter):
     COLOR = {
         "DEBUG": "GREEN",
@@ -15,9 +16,13 @@ class ColorFilter(Filter):
 
 
 class SensitiveWordsFilter(Filter):
-
-    SENSITIVE_WORDS: set[str] = {'phone', 'password', 'passport',}
+    SENSITIVE_WORDS: set[str] = {
+        "phone",
+        "password",
+        "passport",
+        "api",
+        "key",
+    }
 
     def filter(self, record):
         return not any(word.lower() in record.msg.lower() for word in SensitiveWordsFilter.SENSITIVE_WORDS)
-

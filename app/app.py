@@ -10,12 +10,7 @@ from core.config import (
 log = log_setting.get_configure_logging(__name__)
 
 
-app = FastAPI(
-    servers=[
-        {"url": "api/v1", "description": "Staging environment"},
-        {"url": "api/v2", "description": "Production environment"},
-    ],
-)
+app = FastAPI()
 
 app.include_router(api_v1_routes)
 
