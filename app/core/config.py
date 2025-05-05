@@ -1,10 +1,11 @@
-from logging import INFO, Logger, basicConfig, getLogger
+from logging import INFO, Logger, basicConfig, getLogger, Filter
 from logging.handlers import TimedRotatingFileHandler
 from os import mkdir, path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
 from pydantic_settings.main import SettingsConfigDict
+from core.logging.filters import ColorFilter, SensitiveWordsFilter
 
 
 class ModelConfig(BaseSettings):
@@ -59,9 +60,10 @@ class LoggingSettings(ModelConfig):
     backup_count: int = Field(
         default=30,
         validation_alias="BACKUP_COUNT",
-        description="Interval of backup/roating logs. Default 30 midnites. 31st log will ovverides the first log.",
+        description="Interval of backup/roating logs. Default 30 midnights. 31st log will ovverides the first log.",
     )
     utc: bool = Field(default=True, validation_alias="LOG_UTC")
+
 
     def get_configure_logging(
         self,
@@ -78,6 +80,10 @@ class LoggingSettings(ModelConfig):
             backupCount=self.backup_count,
             utc=self.utc,
         )
+
+
+        logger.addFilter(ColorFilter())
+        logger.addFilter(SensitiveWordsFilter())
 
         basicConfig(
             level=level,

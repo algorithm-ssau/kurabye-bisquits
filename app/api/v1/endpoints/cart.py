@@ -1,4 +1,3 @@
-from pathlib import Path
 from uuid import UUID
 
 from fastapi import APIRouter, Body, Depends, HTTPException
@@ -9,7 +8,7 @@ from services.cartService import get_cart_service
 
 router = APIRouter(prefix="/cart", tags=["Cart"])
 
-log = log_setting.get_configure_logging(filename=Path(__file__).stem)
+log = log_setting.get_configure_logging(filename=__name__)
 
 
 @router.post("/{product_id}")

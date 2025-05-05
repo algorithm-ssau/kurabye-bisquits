@@ -1,4 +1,3 @@
-from pathlib import Path
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -14,7 +13,7 @@ SECRET_KEY = auth_settings.secret_key
 ALGORITHM = auth_settings.algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = auth_settings.access_token_expire_minutes
 
-log = log_setting.get_configure_logging(filename=Path(__file__).stem)
+log = log_setting.get_configure_logging(filename=__name__)
 
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])

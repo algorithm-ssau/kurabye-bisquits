@@ -1,6 +1,3 @@
-from logging import getLogger
-from pathlib import Path
-
 from fastapi import FastAPI
 from uvicorn import run as uvicorn_run
 
@@ -10,7 +7,7 @@ from core.config import (
     log_setting,
 )
 
-log = log_setting.get_configure_logging(Path(__file__).stem)
+log = log_setting.get_configure_logging(__name__)
 
 
 app = FastAPI(

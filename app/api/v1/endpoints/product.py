@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from pathlib import Path
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -9,7 +8,7 @@ from schemas.product import ProductFullResponseSchema, ProductQueryParams, Produ
 from services.productService import ProductService, get_product_service
 
 router = APIRouter(prefix="/product", tags=["Products"])
-log = log_setting.get_configure_logging(filename=Path(__file__).stem)
+log = log_setting.get_configure_logging(filename=__name__)
 
 
 @router.get(
@@ -24,6 +23,7 @@ async def get_products(
     product_query: ProductQueryParams = Query(),
     product_service: ProductService = Depends(get_product_service),
 ):
+    log.info("API KEY: 1243")
     products = await product_service.get_products(limit=product_query.limit, offset=product_query.offset)
     if products:
         return products
