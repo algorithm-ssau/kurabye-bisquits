@@ -1,5 +1,6 @@
 main {
   padding-left: 10vh;
+  padding-right: 10vh;
   color: #683C1A;
   font-size: 1.5rem;
 }
@@ -48,17 +49,29 @@ tfoot .total td {
   letter-spacing: 1px;
 }
 
-.order-info {
-  width: 300px;
-  background: #F3E3D3;
-  padding: 20px;
-  border-radius: 20px;
-
+.button-group {
+  display: flex;
+  gap: 10px;
+  height: 30px;
 }
 
-.order-info h2 {
-  margin-top: 0;
-  font-size: 1.2em;
+.order-table button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px;
+  margin: 0px 0px;
+}
+
+.order-table button img {
+  width: 30px;
+  height: 30px;
+}
+
+.counter {
+  font-size: 23px;
+  font-weight: 500;
+  margin: 0px 0px;
 }
 
 .footer {
@@ -74,6 +87,39 @@ button {
   font-size: 24px;
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 28px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .titleBasket {
+    font-size: 1.5rem;
+  }
+  .order-table {
+    flex-direction: column;
+    padding: 10px;
+    gap: 20px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  thead th,
+  tbody td,
+  tfoot .total td {
+    padding: 6px;
+  }
+
+  .order-table button img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .counter {
+    font-size: 18px;
+  }
+  button {
+    font-size: 18px;
+  }
 }

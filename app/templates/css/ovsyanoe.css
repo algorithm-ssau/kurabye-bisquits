@@ -1,5 +1,6 @@
 main {
   padding-left: 10vh;
+  padding-right: 10vh;
   color: #683C1A;
   font-size: 1.5rem;
 }
@@ -21,6 +22,12 @@ main {
   padding: 20px;
   background-color: #F3E3D3;
   border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
 }
 
 .left-part,
@@ -51,7 +58,6 @@ main {
   margin-top: 0px;
   color: #683C1A;
   font-size: 1.5rem;
-
 }
 
 .product-details {
@@ -66,7 +72,6 @@ main {
   padding: 0;
   margin: 0;
   display: block;
-
 }
 
 .price-list li {
@@ -90,10 +95,14 @@ main {
 
 .counter {
   font-size: 23px;
-  /* Размер шрифта для счетчика */
   font-weight: 500;
   margin: 5px 0px;
-  /* Добавляем отступы слева и справа */
+}
+
+@media (max-width: 600px) {
+  .counter {
+    font-size: 18px;
+  }
 }
 
 .price-list button {
@@ -124,7 +133,12 @@ main {
   margin-top: 30px;
   color: #683C1A;
   font-size: 1.2rem;
+}
 
+@media (max-width: 600px) {
+  .nutrients, .product-details, .product-description {
+    font-size: 1.2rem;
+  }
 }
 
 .nutrients p {
@@ -132,20 +146,28 @@ main {
 }
 
 .footer {
-  padding-right: 20vh;
+  padding-right: 10vh;
   padding-left: 10vh;
   padding-bottom: 10vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* ровно 3 колонки */
   gap: 50px 50px;
   margin-top: 40px
 }
 
-@media (max-width: 600px) {
-  .product-grid {
-    padding-right: 10vh;
+@media (max-width: 1000px) {
+  .footer {
+    padding-right: 0vh;
     padding-left: 0vh;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding-right: 0vh;
+    padding-left: 0vh;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -180,7 +202,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* распределяет слева и справа */
   padding: 0 5px;
 }
 
@@ -198,16 +219,4 @@ main {
   width: 15px;
   height: 15px;
   cursor: pointer;
-}
-
-@media (max-width: 1000px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .product-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
 }
