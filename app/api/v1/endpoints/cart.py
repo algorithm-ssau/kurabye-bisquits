@@ -1,11 +1,15 @@
+from pathlib import Path
 from uuid import UUID
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 
+from core.config import log_setting
 from schemas.cart import AddProductToCartRequest, DeleteProductFromCartRequest
 from services.cartService import get_cart_service
 
 router = APIRouter(prefix="/cart", tags=["Cart"])
+
+log = log_setting.get_configure_logging(filename=Path(__file__).stem)
 
 
 @router.post("/{product_id}")
@@ -19,6 +23,12 @@ async def add_product_to_cart(
         product_quantity=product_to_cart.product_quantity,
     )
     if status:
+        log.info(
+            "The product %s successfully added to cart %s in the %s quantity.",
+            product_to_cart.product_id,
+            product_to_cart.cart_id,
+            product_to_cart.product_quantity,
+        )
         return {"status": "success"}
 
     raise HTTPException(status_code=404)
@@ -43,6 +53,12 @@ async def delete_product_from_cart(
         product_quantity=product_delete.product_quantity,
     )
     if is_product_deleted:
+        log.info(
+            "The %s %s product has deleted from the cart %s",
+            product_delete.product_quantity,
+            product_delete.product_id,
+            product_delete.cart_id,
+        )
         return {"status": "success"}
 
     raise HTTPException(status_code=404)
