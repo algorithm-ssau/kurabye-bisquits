@@ -1,5 +1,6 @@
-from logging import INFO, Logger, basicConfig
+from logging import INFO, Logger, basicConfig, getLogger
 from logging.handlers import TimedRotatingFileHandler
+from os import mkdir, path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
@@ -62,27 +63,30 @@ class LoggingSettings(ModelConfig):
     )
     utc: bool = Field(default=True, validation_alias="LOG_UTC")
 
-    def configure_logging(
+    def get_configure_logging(
         self,
-        logger: Logger,
         filename: str,
         level=INFO,
-    ):
+    ) -> Logger:
+        logger = getLogger(filename)
+        if not path.isdir(self.log_directory):
+            mkdir(self.log_directory)
+
         handler = TimedRotatingFileHandler(
             filename=f"{self.log_directory}/log_{filename}",
             when=self.log_roating,
             backupCount=self.backup_count,
             utc=self.utc,
         )
-        logger.addHandler(handler)
 
         basicConfig(
             level=level,
-            filename=f"{self.log_directory}/log_{filename}",
-            filemode="at",
+            handlers=[handler],
             datefmt=self.date_format,
             format=self.log_format,
         )
+
+        return logger
 
 
 # create config instances
