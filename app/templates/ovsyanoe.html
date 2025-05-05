@@ -5,6 +5,8 @@
 <link rel="stylesheet" type="text/css" href="css/fonts.css">
 <link rel="stylesheet" type="text/css" href="css/header.css">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +32,10 @@
   </header>
 
   <main class="main">
-    <h1 class="titleProduct">Овсяное печенье</h1>
+    <div class="form-row">
+      <h1 class="titleProduct">Овсяное печенье</h1>
+      <img src="img/main/bisquit.svg" class="bisquit" alt="печенька">
+    </div>
     <section class="container">
       <div class="left-part">
         <div class="product-photo">
@@ -50,7 +55,7 @@
               <div class="price-text">300 гр – 350 руб</div>
               <div class="button-group">
                 <button><img src="img/minus.svg" alt="-"></button>
-                <span class="counter">1</span> <!-- Счетчик -->
+                <span class="counter">0</span> <!-- Счетчик -->
                 <button><img src="img/plus.svg" alt="+"></button>
               </div>
             </li>
@@ -58,7 +63,7 @@
               <div class="price-text">500 гр – 450 руб</div>
               <div class="button-group">
                 <button><img src="img/minus.svg" alt="-"></button>
-                <span class="counter">1</span> <!-- Счетчик -->
+                <span class="counter">0</span> <!-- Счетчик -->
                 <button><img src="img/plus.svg" alt="+"></button>
               </div>
             </li>
@@ -66,7 +71,7 @@
               <div class="price-text">1 кг – 700 руб</div>
               <div class="button-group">
                 <button><img src="img/minus.svg" alt="-"></button>
-                <span class="counter">1</span> <!-- Счетчик -->
+                <span class="counter">0</span> <!-- Счетчик -->
                 <button><img src="img/plus.svg" alt="+"></button>
               </div>
             </li>
@@ -83,7 +88,7 @@
         </div>
       </div>
     </section>
-    <h2>Рекомендации:</h2>
+    <h2>Рекомендации</h2>
     <section class="footer">
       <a href="ovsyanoe.html" class="product-card-link">
         <div class="product-card">
@@ -128,6 +133,7 @@
       </a>
     </section>
   </main>
+  <script src="js/lgbt.js"></script>
 </body>
 
 </html>
