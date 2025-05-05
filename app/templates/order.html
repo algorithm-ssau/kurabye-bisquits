@@ -52,22 +52,46 @@
           <input type="tel" id="phone" placeholder="366000, г. Самара, ул. Мичурина, д.42">
         </div>
 
-        <div class="form-row">
-          <label>Способ доставки</label>
-          <button type="button">Выбрать доставку</button>
+        <div class="form-row-dropdown">
+          <div class="dropdown">
+            <button class="dropdown-toggle">Выбрать способ доставки</button>
+            <div class="dropdown-content">
+              <a href="#">BisquitsMail</a>
+              <a href="#">КазПочта</a>
+            </div>
+          </div>
         </div>
 
         <div class="form-row full-width">
-          <span>Выбор оплаты</span>
-        </div>
-
-        <div class="form-row payment-options">
+          <label>Выбор оплаты</label>
           <button type="button">Картой</button>
           <button type="button">Наличными</button>
         </div>
       </div>
+      
       <div class="order-info">
         <h2>Информация к заказу:</h2>
+        <table class="delivery-summary">
+          <tbody>
+            <tr>
+              <td><strong>Способ доставки:</strong></td>
+              <td id="delivery-method"></td>
+            </tr>
+            <tr>
+              <td><strong>Время доставки:</strong></td>
+              <td id="delivery-time"></td>
+            </tr>
+            <tr>
+              <td><strong>Стоимость доставки:</strong></td>
+              <td id="delivery-cost"></td>
+            </tr>
+            <tr>
+              <td><strong>Стоимость оплаты с доставкой:</strong></td>
+              <td id="total-cost"></td>
+            </tr>
+          </tbody>
+        </table>
+        
       </div>
     </section>
   </main>
