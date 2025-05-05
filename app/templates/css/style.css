@@ -10,5 +10,5 @@ html,
 body {
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
-
+  --myColor: #da671a;
 }
