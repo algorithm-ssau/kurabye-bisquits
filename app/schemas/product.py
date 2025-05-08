@@ -8,8 +8,11 @@ class ProductResponseSchema(BaseModel):
     name: str = Field(min_length=1, max_length=255)
     product_image: str
     price: float
-    calculus: ProductCalculus = Field(default=ProductCalculus.IN_PACKAGES)
-    quantity: int = Field(gt=0, default=1)
+    calculus: ProductCalculus = Field(default=ProductCalculus.IN_GRAMS)
+    grammage: int | None = Field(gt=0, default=None)
+
+    def __hash__(self):
+        return hash(self.product_id)
 
 
 class ProductFullResponseSchema(ProductResponseSchema):

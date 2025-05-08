@@ -9,7 +9,7 @@ class Product(BaseModel):
     product_image: str
     price: float
     calculus: ProductCalculus = Field(default=ProductCalculus.IN_GRAMS)
-    quantity: int = Field(gt=0, default=1)
+    grammage: int | None = Field(gt=0, default=None)
 
     def __hash__(self):
         return hash(self.product_id)
