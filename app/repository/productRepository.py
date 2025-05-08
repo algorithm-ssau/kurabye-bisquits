@@ -7,7 +7,7 @@ from domain.entities.compositionElement import CompositionELement
 from domain.entities.product import Product, ProductFullInfo
 from domain.exceptions.productExceptions import ProductNotFoundException
 from repository.abstractRepositroies import AbstractProductRepository
-from repository.sql.productQueries import SELECT_ALL_RPODUCT_INFORMATION
+from repository.sql.productQueries import SELECT_ALL_RPODUCT_INFORMATION, SELECT_PRODUCTS
 
 DEFAULT_LIMIT_VALUE = 10
 DEFAUALT_OFFSET = 0
@@ -52,11 +52,23 @@ class ProductRepository(AbstractProductRepository):
             return None
 
     async def get_products(
-        self,
-        limit: int = DEFAULT_LIMIT_VALUE,
-        offset: int = DEFAUALT_OFFSET,
+        self, limit: int = DEFAULT_LIMIT_VALUE, offset: int = DEFAUALT_OFFSET, order_by: str = "created at"
     ) -> list[Product] | None:
-        pass
+        async with self.__session as session:
+            products = await session.execute(
+                SELECT_PRODUCTS,
+                params={
+                    "limit": limit,
+                    "offset": offset,
+                    "order_by": order_by,
+                },
+            )
+            products = products.mappings().fetchall()
+
+        if products:
+            return [Product(**product) for product in products]
+
+        return None
 
 
 def get_product_repository(session: AsyncSession = Depends(db_helper.get_session_dependency)):

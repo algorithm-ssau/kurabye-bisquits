@@ -34,3 +34,18 @@ SELECT_ALL_RPODUCT_INFORMATION = text(
     group by product_id, description, fats, proteins, carbohydrates, grammage;
     """
 )
+
+SELECT_PRODUCTS = text(
+    """
+    select
+        product_id,
+        category_id,
+        product_image,
+        product_name as name,
+        product_price as price
+    from product
+    order by :order_by
+    limit :limit
+    offset :offset;
+    """
+)
