@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: 'JoNova', sans-serif;
+  background-color: #FFFDF6;
+  position: relative;
+
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  --myColor: #da671a;
+}
