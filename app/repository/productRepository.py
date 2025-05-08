@@ -46,7 +46,7 @@ class ProductRepository(AbstractProductRepository):
                     price=db_product["product_price"],
                     product_image=db_product["product_image"],
                     description=db_product["description"],
-                    quantity=db_product["grammage"],
+                    grammage=db_product["grammage"],
                     carbohydrates=db_product["carbohydrates"],
                     composition=compositions,
                 )

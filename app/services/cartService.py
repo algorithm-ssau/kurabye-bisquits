@@ -2,7 +2,7 @@ from fastapi import Depends
 
 from domain.entities.cart import Cart
 from repository.abstractRepositroies import AbstractCartRepository
-from repository.fake.cartRepository import get_cart_repository
+from repository.cartRepository import get_cart_repository
 from services.abstractServices import AbstractCartService
 
 
