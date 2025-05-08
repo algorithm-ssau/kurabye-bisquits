@@ -59,7 +59,7 @@ class ProductRepository(AbstractProductRepository):
         self,
         limit: int = DEFAULT_LIMIT_VALUE,
         offset: int = DEFAUALT_OFFSET,
-        order_by: str = "created at",
+        order_by: str = "created_at",
     ) -> list[Product] | None:
         async with self.__session as session:
             products = await session.execute(
