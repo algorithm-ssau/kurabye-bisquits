@@ -23,7 +23,7 @@ class DataBaseHelper:
         )
 
     @asynccontextmanager
-    async def session_dependency(self):
+    async def get_session_dependency(self):
         async with self.__session_factory() as session:
             yield session
             await session.close()
