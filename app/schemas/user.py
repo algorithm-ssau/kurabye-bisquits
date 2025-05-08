@@ -1,12 +1,11 @@
 from string import punctuation
-from uuid import UUID
 
 from pydantic import BaseModel, Field
 from pydantic.functional_validators import field_validator
 
 
 class UserResponseSchema(BaseModel):
-    user_id: UUID
+    user_id: int
     user_name: str = Field(min_length=1, max_length=255)
 
 

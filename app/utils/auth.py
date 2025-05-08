@@ -25,9 +25,6 @@ def create_jwt(user_data: User, expires_delta: timedelta = timedelta(minutes=DEF
     to_encode = user_data.dict()
     expire = datetime.utcnow() + expires_delta
     to_encode["exp"] = expire
-    # ==============================
-    # uuid is not json serializable
-    to_encode["user_id"] = str(user_data.user_id)
-    # ==============================
+    to_encode["user_id"] = user_data.user_id
     encoded_jwt = jwt_encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt

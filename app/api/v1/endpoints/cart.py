@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from fastapi import APIRouter, Body, Depends, HTTPException
 
 from core.config import log_setting
@@ -34,7 +32,7 @@ async def add_product_to_cart(
 
 
 @router.get("/")
-async def get_cart(cart_id: UUID, cart_service=Depends(get_cart_service)):
+async def get_cart(cart_id: int, cart_service=Depends(get_cart_service)):
     cart = await cart_service.get_cart(cart_id=cart_id)
     if cart:
         return cart

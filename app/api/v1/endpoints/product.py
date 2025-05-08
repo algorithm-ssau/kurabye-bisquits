@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
@@ -38,7 +37,7 @@ async def get_products(
 
 @router.get("/{product_id}", response_model=ProductFullResponseSchema)
 async def get_product(
-    product_id: UUID,
+    product_id: int,
     product_service: ProductService = Depends(get_product_service),
 ):
     product = await product_service.get_product(product_id)

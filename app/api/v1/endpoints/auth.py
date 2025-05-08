@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
@@ -58,7 +56,7 @@ async def add_user(user_in: UserCreateSchema):
     try:
         # TODO: Check that not user with this login/email/phone/etc.
         user = UserWithCreds(
-            user_id=uuid4(),
+            user_id=1,
             user_name=user_in.user_name,
             hash_password=hash_password(user_in.password),
         )

@@ -1,5 +1,4 @@
 from collections import defaultdict
-from uuid import UUID
 
 from fastapi import Depends
 
@@ -14,7 +13,7 @@ salt = CompositionELement(name="salt")
 
 fake_products_list = [
     ProductFullInfo(
-        product_id=UUID("fcb26434-d665-42d0-a647-db2b8d6a8e05"),
+        product_id=1,
         product_image="/images/1",
         name="Kurabye Bisquits",
         composition=[milk, suggar, dough, salt],
@@ -22,7 +21,7 @@ fake_products_list = [
         price=10.99,
     ),
     ProductFullInfo(
-        product_id=UUID("fcb26434-d665-42d0-a647-db2b8d6a8e06"),
+        product_id=2,
         product_image="/images/2",
         name="Kurabye Cookies",
         energy=200,
@@ -34,7 +33,7 @@ fake_products_list = [
         price=12.99,
     ),
     ProductFullInfo(
-        product_id=UUID("fcb26434-d665-42d0-a647-db2b8d6a8e07"),
+        product_id=3,
         product_image="/images/3",
         name="Kurabye Crackers",
         energy=300,
@@ -42,7 +41,7 @@ fake_products_list = [
         price=14.99,
     ),
     ProductFullInfo(
-        product_id=UUID("fcb26434-d665-42d0-a647-db2b8d6a8e08"),
+        product_id=4,
         product_image="/images/4",
         name="Kurabye Cakes",
         energy=400,
@@ -50,7 +49,7 @@ fake_products_list = [
         price=16.99,
     ),
     ProductFullInfo(
-        product_id=UUID("fcb26434-d665-42d0-a647-db2b8d6a8e09"),
+        product_id=5,
         product_image="/images/5",
         name="Kurabye Candies",
         energy=500,
@@ -58,7 +57,7 @@ fake_products_list = [
         price=18.99,
     ),
     ProductFullInfo(
-        product_id=UUID("fcb26434-d665-42d0-a647-db2b8d6a8e10"),
+        product_id=6,
         product_image="/images/6",
         name="Kurabye Chocolates",
         energy=600,
@@ -67,7 +66,7 @@ fake_products_list = [
     ),
 ]
 
-fake_products: dict[UUID, Product | None] = defaultdict(lambda: None)
+fake_products: dict[int, Product | None] = defaultdict(lambda: None)
 for product in fake_products_list:
     fake_products[product.product_id] = product
 
@@ -76,7 +75,7 @@ class ProductRepository(AbstractProductRepository):
     def __init__(self, session: None):
         self.__session: None = session
 
-    async def get_product(self, product_id: UUID) -> Product | None:
+    async def get_product(self, product_id: int) -> Product | None:
         return fake_products[product_id]
 
     async def get_products(self, limit: int = 10, offset: int = 0) -> list[Product] | None:

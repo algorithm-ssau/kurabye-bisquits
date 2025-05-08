@@ -1,12 +1,10 @@
-from uuid import UUID
-
 from pydantic import BaseModel, Field
 
 from domain.enums import ProductCalculus
 
 
 class ProductResponseSchema(BaseModel):
-    product_id: UUID
+    product_id: int
     name: str = Field(min_length=1, max_length=255)
     product_image: str
     price: float

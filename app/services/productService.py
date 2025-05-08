@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from fastapi import Depends
 
 from domain.entities.product import Product
@@ -12,7 +10,7 @@ class ProductService(AbstractProductService):
     def __init__(self, product_repository):
         self.__product_repository: AbstractProductRepository = product_repository
 
-    async def get_product(self, product_id: UUID) -> Product | None:
+    async def get_product(self, product_id: int) -> Product | None:
         return await self.__product_repository.get_product(product_id)
 
     async def get_products(self, limit: int = 10, offset: int = 0) -> list[Product] | None:
