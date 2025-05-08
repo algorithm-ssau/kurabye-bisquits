@@ -19,7 +19,11 @@ class ProductRepository(AbstractProductRepository):
     def __init__(self, session: AsyncSession):
         self.__session: AsyncSession = session
 
-    async def get_product(self, product_id: int, package_id: int) -> ProductFullInfo | None:
+    async def get_product(
+        self,
+        product_id: int,
+        package_id: int,
+    ) -> ProductFullInfo | None:
         async with self.__session as session:
             # get product from db
             db_product = await session.execute(
@@ -30,7 +34,7 @@ class ProductRepository(AbstractProductRepository):
                 },
             )
             db_product = db_product.mappings().fetchone()
-            log.debug("%s", db_product)
+
             if db_product:
                 # create list of compositions of the product
                 compositions = [CompositionELement(**element) for element in db_product["composition"]]
@@ -52,7 +56,10 @@ class ProductRepository(AbstractProductRepository):
             return None
 
     async def get_products(
-        self, limit: int = DEFAULT_LIMIT_VALUE, offset: int = DEFAUALT_OFFSET, order_by: str = "created at"
+        self,
+        limit: int = DEFAULT_LIMIT_VALUE,
+        offset: int = DEFAUALT_OFFSET,
+        order_by: str = "created at",
     ) -> list[Product] | None:
         async with self.__session as session:
             products = await session.execute(
