@@ -1,10 +1,9 @@
 from http import HTTPStatus
-from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from core.config import log_setting
-from schemas.product import ProductFullResponseSchema, ProductQueryParams, ProductResponseSchema
+from schemas.product import ProductFullResponseSchema, ProductListQueryParams, ProductQueryParams, ProductResponseSchema
 from services.productService import ProductService, get_product_service
 
 router = APIRouter(prefix="/product", tags=["Products"])
@@ -12,7 +11,7 @@ log = log_setting.get_configure_logging(filename=__name__)
 
 
 @router.get(
-    "/",
+    "/all",
     response_model=list[ProductResponseSchema],
     status_code=HTTPStatus.OK,
     responses={
@@ -20,10 +19,10 @@ log = log_setting.get_configure_logging(filename=__name__)
     },
 )
 async def get_products(
-    product_query: ProductQueryParams = Query(),
+    product_query: ProductListQueryParams = Query(),
     product_service: ProductService = Depends(get_product_service),
 ):
-    log.info("API KEY: 1243")
+    log.debug("Get product routes")
     products = await product_service.get_products(limit=product_query.limit, offset=product_query.offset)
     if products:
         return products
@@ -36,12 +35,15 @@ async def get_products(
     raise HTTPException(status_code=404, detail="The products hasn't found.")
 
 
-@router.get("/{product_id}", response_model=ProductFullResponseSchema)
+@router.get("/", response_model=ProductFullResponseSchema)
 async def get_product(
-    product_id: UUID,
+    product_query: ProductQueryParams = Query(),
     product_service: ProductService = Depends(get_product_service),
 ):
-    product = await product_service.get_product(product_id)
+    product = await product_service.get_product(
+        product_id=product_query.product_id,
+        package_id=product_query.package_id,
+    )
     if product:
         return product
 

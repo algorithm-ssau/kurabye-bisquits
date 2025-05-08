@@ -1,10 +1,9 @@
-from uuid import UUID
-
 from fastapi import APIRouter, Body, Depends, HTTPException
 
 from core.config import log_setting
-from schemas.cart import AddProductToCartRequest, DeleteProductFromCartRequest
+from schemas.cart import AddProductToCartRequest, CartResponseSchema, DeleteProductFromCartRequest
 from services.cartService import get_cart_service
+from utils.cartUtils import get_cart_schema
 
 router = APIRouter(prefix="/cart", tags=["Cart"])
 
@@ -33,11 +32,12 @@ async def add_product_to_cart(
     raise HTTPException(status_code=404)
 
 
-@router.get("/")
-async def get_cart(cart_id: UUID, cart_service=Depends(get_cart_service)):
+@router.get("/", response_model=CartResponseSchema)
+async def get_cart(cart_id: int, cart_service=Depends(get_cart_service)):
     cart = await cart_service.get_cart(cart_id=cart_id)
+
     if cart:
-        return cart
+        return get_cart_schema(cart)
     raise HTTPException(status_code=404, detail="Cart doesn't exists.")
 
 

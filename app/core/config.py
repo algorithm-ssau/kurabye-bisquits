@@ -52,12 +52,10 @@ class DBSettings(ModelConfig):
 
 
 class LoggingSettings(ModelConfig):
-    log_directory: str = Field(
-        default="logs", validation_alias="LOG_DIRECTORY"
-    )  # Изменен путь по умолчанию на относительный
+    log_directory: str = Field(default="logs", validation_alias="LOG_DIRECTORY")
+    log_level: int = Field(default=INFO, validation_alias="LOG_LEVEL")
     date_format: str = Field(default="%Y-%m-%d %H:%M:%S", validation_alias="DATE_FORMAT")
     log_format: str = Field(
-        # Используем %(name) вместо %(module) для отображения имени логгера
         default="[%(asctime)s.%(msecs)03d] %(name)-30s:%(lineno)-3d %(levelname)-7s - %(message)s",
         validation_alias="LOG_FORMAT",
     )
@@ -68,16 +66,16 @@ class LoggingSettings(ModelConfig):
         description="Interval of backup/roating logs. Default 30 midnights. 31st log will ovverides the first log.",
     )
     utc: bool = Field(default=True, validation_alias="LOG_UTC")
-    # Добавим уровень логирования в настройки
 
-    def get_configure_logging(self, filename: str, log_level=INFO) -> Logger:
+    def get_configure_logging(self, filename: str) -> Logger:
         logger = getLogger(filename)
+        logger.debug("Configuration of logger %s", filename)
 
         if logger.hasHandlers():
             # we don't need to configurate logger if it already exists and configurated
             return logger
 
-        logger.setLevel(log_level)
+        logger.setLevel(self.log_level)
 
         try:
             if not path.isdir(self.log_directory):
@@ -99,7 +97,7 @@ class LoggingSettings(ModelConfig):
                 encoding="utf-8",
             )
             handler.setFormatter(log_formatter)
-            handler.setLevel(log_level)
+            handler.setLevel(self.log_level)
 
             # use this filter if you want see the logs in the console
             # logger.addFilter(ColorFilter())  # noqa: ERA001
@@ -110,7 +108,7 @@ class LoggingSettings(ModelConfig):
             logger.debug(
                 "Logger %r successfuly configurated. Logger level: %s. Logger file: %r",
                 filename,
-                log_level,
+                self.log_level,
                 log_file_path,
             )
 
@@ -122,14 +120,12 @@ class LoggingSettings(ModelConfig):
             )
         return logger
 
-class SentryConfiguration(ModelConfig):
 
+class SentryConfiguration(ModelConfig):
     sentry_dsn: str = Field(default="my-sentry-dsn", validation_alias="SENTRY_DSN")
 
     def run_sentry(self):
-        sentry_init(
-            dsn=self.sentry_dsn
-        )
+        sentry_init(dsn=self.sentry_dsn)
 
 
 # create config instances

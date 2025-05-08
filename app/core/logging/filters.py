@@ -25,4 +25,4 @@ class SensitiveWordsFilter(Filter):
     }
 
     def filter(self, record):
-        return not any(word.lower() in record.msg.lower() for word in SensitiveWordsFilter.SENSITIVE_WORDS)
+        return not any(word.lower() in str(record.msg).lower() for word in SensitiveWordsFilter.SENSITIVE_WORDS)
