@@ -8,7 +8,7 @@ class Product(BaseModel):
     name: str = Field(min_length=1, max_length=255)
     product_image: str
     price: float
-    calculus: ProductCalculus = Field(default=ProductCalculus.IN_PACKAGES)
+    calculus: ProductCalculus = Field(default=ProductCalculus.IN_GRAMS)
     quantity: int = Field(gt=0, default=1)
 
     def __hash__(self):
