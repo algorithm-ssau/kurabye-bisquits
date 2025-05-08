@@ -1,6 +1,3 @@
-from logging import getLogger
-from pathlib import Path
-
 from fastapi import FastAPI
 from uvicorn import run as uvicorn_run
 
@@ -8,17 +5,14 @@ from api.v1.routes import routers as api_v1_routes
 from core.config import (
     host_settings,  # host configuration
     log_setting,
+    sentry_config,
 )
 
-log = log_setting.get_configure_logging(Path(__file__).stem)
+log = log_setting.get_configure_logging(__name__)
 
+sentry_config.run_sentry()
 
-app = FastAPI(
-    servers=[
-        {"url": "api/v1", "description": "Staging environment"},
-        {"url": "api/v2", "description": "Production environment"},
-    ],
-)
+app = FastAPI()
 
 app.include_router(api_v1_routes)
 

@@ -1,10 +1,14 @@
-from logging import INFO, Logger, basicConfig, getLogger
+from logging import INFO, Filter, Formatter, Logger, basicConfig, getLogger
 from logging.handlers import TimedRotatingFileHandler
 from os import mkdir, path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
 from pydantic_settings.main import SettingsConfigDict
+
+from core.logging.filters import ColorFilter, SensitiveWordsFilter
+
+from sentry_sdk import init as sentry_init
 
 
 class ModelConfig(BaseSettings):
@@ -48,45 +52,84 @@ class DBSettings(ModelConfig):
 
 
 class LoggingSettings(ModelConfig):
-    # Documentation: https://docs.python.org/3/library/logging.html
-    log_directory: str = Field(default="/logs", validation_alias="LOG_DIRECTORY")
+    log_directory: str = Field(
+        default="logs", validation_alias="LOG_DIRECTORY"
+    )  # Изменен путь по умолчанию на относительный
     date_format: str = Field(default="%Y-%m-%d %H:%M:%S", validation_alias="DATE_FORMAT")
     log_format: str = Field(
-        default="[%(asctime)s.%(msecs)03d] %(module)10s:%(lineno)-3d %(levelname)-7s - %(message)s",
+        # Используем %(name) вместо %(module) для отображения имени логгера
+        default="[%(asctime)s.%(msecs)03d] %(name)-30s:%(lineno)-3d %(levelname)-7s - %(message)s",
         validation_alias="LOG_FORMAT",
     )
     log_roating: str = Field(default="midnight", validation_alias="LOG_ROATING")
     backup_count: int = Field(
         default=30,
         validation_alias="BACKUP_COUNT",
-        description="Interval of backup/roating logs. Default 30 midnites. 31st log will ovverides the first log.",
+        description="Interval of backup/roating logs. Default 30 midnights. 31st log will ovverides the first log.",
     )
     utc: bool = Field(default=True, validation_alias="LOG_UTC")
+    # Добавим уровень логирования в настройки
 
-    def get_configure_logging(
-        self,
-        filename: str,
-        level=INFO,
-    ) -> Logger:
+    def get_configure_logging(self, filename: str, log_level=INFO) -> Logger:
         logger = getLogger(filename)
-        if not path.isdir(self.log_directory):
-            mkdir(self.log_directory)
 
-        handler = TimedRotatingFileHandler(
-            filename=f"{self.log_directory}/log_{filename}",
-            when=self.log_roating,
-            backupCount=self.backup_count,
-            utc=self.utc,
-        )
+        if logger.hasHandlers():
+            # we don't need to configurate logger if it already exists and configurated
+            return logger
 
-        basicConfig(
-            level=level,
-            handlers=[handler],
-            datefmt=self.date_format,
-            format=self.log_format,
-        )
+        logger.setLevel(log_level)
 
+        try:
+            if not path.isdir(self.log_directory):
+                mkdir(self.log_directory)
+        except OSError as error:
+            logger.error("Не удалось создать директорию логов %r: %s", self.log_directory, error)
+
+        log_formatter = Formatter(fmt=self.log_format, datefmt=self.date_format)
+
+        safe_filename = filename.replace(".", "_") + ".log"
+        log_file_path = path.join(self.log_directory, safe_filename)
+
+        try:
+            handler = TimedRotatingFileHandler(
+                filename=log_file_path,
+                when=self.log_roating,
+                backupCount=self.backup_count,
+                utc=self.utc,
+                encoding="utf-8",
+            )
+            handler.setFormatter(log_formatter)
+            handler.setLevel(log_level)
+
+            # use this filter if you want see the logs in the console
+            # logger.addFilter(ColorFilter())  # noqa: ERA001
+            logger.addFilter(SensitiveWordsFilter())
+
+            logger.addHandler(handler)
+
+            logger.debug(
+                "Logger %r successfuly configurated. Logger level: %s. Logger file: %r",
+                filename,
+                log_level,
+                log_file_path,
+            )
+
+        except Exception as error:
+            logger.error(
+                "The error is ocured during the logger configuration. Logger %r: %s",
+                logger,
+                error,
+            )
         return logger
+
+class SentryConfiguration(ModelConfig):
+
+    sentry_dsn: str = Field(default="my-sentry-dsn", validation_alias="SENTRY_DSN")
+
+    def run_sentry(self):
+        sentry_init(
+            dsn=self.sentry_dsn
+        )
 
 
 # create config instances
@@ -94,3 +137,4 @@ host_settings = HostSettings()
 auth_settings = AuthSettings()
 db_settings = DBSettings()
 log_setting = LoggingSettings()
+sentry_config = SentryConfiguration()
