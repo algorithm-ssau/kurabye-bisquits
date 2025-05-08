@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class SubCompositionElement(BaseModel):
@@ -6,5 +6,7 @@ class SubCompositionElement(BaseModel):
 
 
 class CompositionELement(BaseModel):
+    element_id: int
     name: str
+    is_allergen: bool = Field(default=False)
     sub_elements: list[SubCompositionElement] | None = None
