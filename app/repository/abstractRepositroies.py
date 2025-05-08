@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
-from uuid import UUID
 
 from domain.entities.cart import Cart
-from domain.entities.product import Product
+from domain.entities.product import Product, ProductFullInfo
 from schemas.user import UserResponseSchema
 
 
@@ -14,7 +13,7 @@ class AbstractUserRepository(ABC):
 
 class AbstractProductRepository(ABC):
     @abstractmethod
-    async def get_product(self, product_id: UUID) -> Product | None:
+    async def get_product(self, product_id: int, package_id: int) -> ProductFullInfo | None:
         pass
 
     @abstractmethod
@@ -24,13 +23,13 @@ class AbstractProductRepository(ABC):
 
 class AbstractCartRepository(ABC):
     @abstractmethod
-    async def get_cart(self, cart_id: UUID) -> Cart | None:
+    async def get_cart(self, cart_id: int) -> Cart | None:
         pass
 
     @abstractmethod
-    async def add_product_to_cart(self, cart_id: UUID, product_id: UUID, product_quantity: int = 1) -> bool:
+    async def add_product_to_cart(self, cart_id: int, product_id: int, product_quantity: int = 1) -> bool:
         pass
 
     @abstractmethod
-    async def delete_product_from_cart(self, cart_id: UUID, product_id, product_quantity: None | int = None) -> bool:
+    async def delete_product_from_cart(self, cart_id: int, product_id, product_quantity: None | int = None) -> bool:
         pass

@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 
 from domain.entities.cart import Cart
-from domain.entities.product import Product
+from domain.entities.product import Product, ProductFullInfo
 
 
 class AbstractProductService(ABC):
     @abstractmethod
-    async def get_product(self, product_id: int) -> Product | None:
+    async def get_product(self, product_id: int, package_id: int) -> ProductFullInfo | None:
         pass
 
     @abstractmethod
