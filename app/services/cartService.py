@@ -22,6 +22,7 @@ class CartService(AbstractCartService):
         )
 
     async def delete_product_from_cart(self, cart_id: int, product_id, product_quantity: None | int = None) -> bool:
+        # if product_quantity is None, than will deleted all products from the cart
         return await self.__cart_repository.delete_product_from_cart(
             cart_id=cart_id,
             product_id=product_id,

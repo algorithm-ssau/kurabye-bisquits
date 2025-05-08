@@ -31,3 +31,26 @@ SELECT_CART_ITEMS = text(
     group by cart_id;
     """
 )
+
+UPSERT_PRODUCT_IN_CART = text(
+    """
+    insert into cart_item (cart_id, product_id, quantity)
+    values (:cart_id, :product_id, :quantity)
+    on conflict (cart_id, product_id)
+    do update set quantity = cart_item.quantity + excluded.quantity;
+    """
+)
+
+
+DELETE_QUANTITY_OF_PRODUCT = text(
+    """
+    update cart_item set quantity = cart_item.quantity - :quantity_to_delete
+    where cart_id = :cart_id and product_id = :product_id;
+    """
+)
+
+DELETE_ALL_PRODUCTS = text(
+    """
+    delete from cart_item where cart_id = :cart_id and product_id = :product_id;
+    """
+)

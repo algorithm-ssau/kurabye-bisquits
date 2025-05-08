@@ -12,7 +12,7 @@ class AddProductToCartRequest(BaseModel):
 class DeleteProductFromCartRequest(BaseModel):
     product_id: int
     cart_id: int
-    product_quantity: int = Field(ge=0, default=1)
+    product_quantity: int | None = Field(ge=0, default=None)
 
 
 class CartItemSchema(BaseModel):

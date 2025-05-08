@@ -2,14 +2,21 @@ from collections import defaultdict
 from pathlib import Path
 
 from fastapi import Depends
+from sqlalchemy.exc import DataError, DBAPIError
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.config import log_setting
 from core.postgres import db_helper
 from domain.entities.cart import Cart
 from domain.entities.product import Product
+from domain.exceptions.cartExceptions import CartDeleteError, CartInsertError
 from repository.abstractRepositroies import AbstractCartRepository
-from repository.sql.cartQueries import SELECT_CART_ITEMS
+from repository.sql.cartQueries import (
+    DELETE_ALL_PRODUCTS,
+    DELETE_QUANTITY_OF_PRODUCT,
+    SELECT_CART_ITEMS,
+    UPSERT_PRODUCT_IN_CART,
+)
 
 log = log_setting.get_configure_logging(Path(__file__).stem)
 
@@ -24,7 +31,25 @@ class CartRepository(AbstractCartRepository):
         product_id: int,
         product_quantity: int = 1,
     ) -> bool:
-        pass
+        async with self.__session as session:
+            try:
+                await session.execute(
+                    UPSERT_PRODUCT_IN_CART,
+                    params={
+                        "cart_id": cart_id,
+                        "product_id": product_id,
+                        "quantity": product_quantity,
+                    },
+                )
+                await session.commit()
+                return True
+
+            except DBAPIError as error:
+                await session.rollback()
+                raise CartInsertError("Cart or product doesn't exists") from error
+
+        await session.rollback()
+        return False
 
     async def delete_product_from_cart(
         self,
@@ -32,7 +57,37 @@ class CartRepository(AbstractCartRepository):
         product_id,
         product_quantity: None | int = None,
     ) -> bool:
-        pass
+        #  if product quantity doesn't specified, thats means
+        #  that we should delete all product from the cart
+        delete_all = product_quantity is None
+
+        async with self.__session as session:
+            try:
+                if delete_all:
+                    await session.execute(
+                        DELETE_ALL_PRODUCTS,
+                        params={
+                            "cart_id": cart_id,
+                            "product_id": product_id,
+                        },
+                    )
+                else:
+                    await session.execute(
+                        DELETE_QUANTITY_OF_PRODUCT,
+                        params={
+                            "cart_id": cart_id,
+                            "product_id": product_id,
+                            "quantity_to_delete": product_quantity,
+                        },
+                    )
+                await session.commit()
+                return True
+
+            except DBAPIError as error:
+                await session.rollback()
+                raise CartDeleteError("Cart or product doesn't exists.") from error
+
+        return False
 
     async def get_cart(self, cart_id: int) -> Cart | None:
         async with self.__session as session:
