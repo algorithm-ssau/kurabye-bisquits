@@ -12,6 +12,7 @@ from domain.entities.product import Product
 from domain.exceptions.cartExceptions import CartDeleteError, CartInsertError
 from repository.abstractRepositroies import AbstractCartRepository
 from repository.sql.cartQueries import (
+    CREATE_CART,
     DELETE_ALL_PRODUCTS,
     DELETE_QUANTITY_OF_PRODUCT,
     SELECT_CART_ITEMS,
@@ -24,6 +25,18 @@ log = log_setting.get_configure_logging(Path(__file__).stem)
 class CartRepository(AbstractCartRepository):
     def __init__(self, session: AsyncSession):
         self.__session: AsyncSession = session
+
+    async def create_cart(self, cart_id: int):
+        async with self.__session as session:
+            try:
+                await session.execute(CREATE_CART, params={"cart_id": cart_id})
+                await session.commit()
+                return True
+            except DBAPIError as error:
+                log.error("DBAPI error when creating the cart %s (%s)", cart_id, error)
+                await session.rollback()
+                return False
+        return False
 
     async def add_product_to_cart(
         self,

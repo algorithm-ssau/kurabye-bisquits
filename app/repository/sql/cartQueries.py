@@ -54,3 +54,10 @@ DELETE_ALL_PRODUCTS = text(
     delete from cart_item where cart_id = :cart_id and product_id = :product_id;
     """
 )
+
+CREATE_CART = text(
+    """
+    insert into cart(cart_id) values(:cart_id)
+    on conflict(cart_id) do nothing;
+    """
+)
