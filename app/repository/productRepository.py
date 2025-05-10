@@ -36,7 +36,7 @@ class ProductRepository(AbstractProductRepository):
             db_product = db_product.mappings().fetchone()
 
             if db_product:
-                # create list of compositions of the product
+                # create the list compositions of the product
                 compositions = [CompositionELement(**element) for element in db_product["composition"]]
                 # create product
                 product = ProductFullInfo(
@@ -54,6 +54,9 @@ class ProductRepository(AbstractProductRepository):
                 return product
 
             return None
+
+    async def set_order_items(self, cart_id: int, order_id: int) -> bool:
+        pass
 
     async def get_products(
         self,
