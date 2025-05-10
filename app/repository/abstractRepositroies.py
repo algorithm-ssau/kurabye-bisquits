@@ -21,6 +21,10 @@ class AbstractProductRepository(ABC):
     async def get_products(self, limit: int = 10, offset: int = 0) -> list[Product] | None:
         pass
 
+    @abstractmethod
+    async def update_product(self, update_product: ProductFullInfo) -> ProductFullInfo | None:
+        pass
+
 
 class AbstractCartRepository(ABC):
     @abstractmethod
