@@ -1,13 +1,14 @@
 from fastapi import Depends
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.config import log_setting
 from core.postgres import db_helper
 from domain.entities.compositionElement import CompositionELement
-from domain.entities.product import Product, ProductFullInfo
+from domain.entities.product import Product, ProductFullInfo, UpdateProduct
 from domain.exceptions.productExceptions import ProductNotFoundException
 from repository.abstractRepositroies import AbstractProductRepository
-from repository.sql.productQueries import SELECT_ALL_RPODUCT_INFORMATION, SELECT_PRODUCTS
+from repository.sql.productQueries import SELECT_ALL_RPODUCT_INFORMATION, SELECT_PRODUCTS, UPDATE_PRODUCT
 
 DEFAULT_LIMIT_VALUE = 10
 DEFAUALT_OFFSET = 0
@@ -36,7 +37,7 @@ class ProductRepository(AbstractProductRepository):
             db_product = db_product.mappings().fetchone()
 
             if db_product:
-                # create list of compositions of the product
+                # create the list compositions of the product
                 compositions = [CompositionELement(**element) for element in db_product["composition"]]
                 # create product
                 product = ProductFullInfo(
@@ -59,7 +60,7 @@ class ProductRepository(AbstractProductRepository):
         self,
         limit: int = DEFAULT_LIMIT_VALUE,
         offset: int = DEFAUALT_OFFSET,
-        order_by: str = "created at",
+        order_by: str = "created_at",
     ) -> list[Product] | None:
         async with self.__session as session:
             products = await session.execute(
@@ -76,6 +77,33 @@ class ProductRepository(AbstractProductRepository):
             return [Product(**product) for product in products]
 
         return None
+
+    async def update_product(
+        self,
+        update_product: ProductFullInfo,
+    ) -> ProductFullInfo | None:
+        async with self.__session as session:
+            try:
+                await session.begin()
+                await session.execute(
+                    UPDATE_PRODUCT,
+                    params={
+                        "product_id": update_product.product_id,
+                        "product_image": update_product.product_image,
+                        "product_name": update_product.name,
+                        "product_price": update_product.price,
+                        "description": update_product.description,
+                        "fats": update_product.fats,
+                        "proteins": update_product.proteins,
+                        "carbohydrates": update_product.carbohydrates,
+                    },
+                )
+                await session.commit()
+                return update_product
+            except DBAPIError:
+                await session.rollback()
+                log.error("Failed updating the product %s", update_product.product_id)
+                # TODO: raise error
 
 
 def get_product_repository(session: AsyncSession = Depends(db_helper.get_session_dependency)):

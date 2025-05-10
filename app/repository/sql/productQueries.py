@@ -49,3 +49,30 @@ SELECT_PRODUCTS = text(
     offset :offset;
     """
 )
+
+# update with locking
+UPDATE_PRODUCT = text(
+    """
+    select
+	product_id
+    from product
+    join md_product using (product_id)
+    where product_id = :product_id
+    for update;
+
+    update product set
+	category_id = :category_id,
+	product_image = :product_image,
+	product_name = :product_name,
+	product_price = :product_price,
+	updated_at = current_timestamp
+    where product_id = :product_id;
+
+    update md_product set
+	description = :description,
+	fats = :fats,
+	proteins = :proteins,
+	carbohydrates = :carbohydrates
+    where product_id = :product_id
+    """
+)

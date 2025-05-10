@@ -46,6 +46,7 @@ async def delete_product_from_cart(
     product_delete: DeleteProductFromCartRequest = Body(),
     cart_service=Depends(get_cart_service),
 ):
+    # if product_quantity is None, than will deleted all products from the cart
     is_product_deleted = await cart_service.delete_product_from_cart(
         cart_id=product_delete.cart_id,
         product_id=product_delete.product_id,
