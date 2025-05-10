@@ -23,7 +23,6 @@ class ProductRepository(AbstractProductRepository):
     async def get_product(
         self,
         product_id: int,
-        package_id: int,
     ) -> ProductFullInfo | None:
         async with self.__session as session:
             # get product from db
@@ -31,7 +30,6 @@ class ProductRepository(AbstractProductRepository):
                 SELECT_ALL_RPODUCT_INFORMATION,
                 params={
                     "product_id": product_id,
-                    "package_id": package_id,
                 },
             )
             db_product = db_product.mappings().fetchone()

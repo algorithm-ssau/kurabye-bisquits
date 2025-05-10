@@ -7,6 +7,13 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 
+    <link
+        rel="preload"
+        as="image"
+        href="/img/main/main_bisquits.webp"
+        type="image/webp"
+    />
+
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -61,7 +68,7 @@
                     </p>
                 </div>
                 <img
-                    src="img/main/main_bisquits.png"
+                    src="img/main/main_bisquits.webp"
                     class="main_bisquits"
                     alt="печенье"
                 />
@@ -98,11 +105,11 @@
                         <img src="img/filters.svg" alt="иконка фильтров" />
                         Фильтры
                     </button>
+
                     <div class="dropdown-content">
-                        <a href="#">В наличии</a>
-                        <a href="#">300 гр</a>
-                        <a href="#">500 гр</a>
-                        <a href="#">1 кг</a>
+                        <a href="#" data-grammage-filter="300">300 гр</a>
+                        <a href="#" data-grammage-filter="500">500 гр</a>
+                        <a href="#" data-grammage-filter="1000">1 кг</a>
                     </div>
                 </div>
 
@@ -112,8 +119,9 @@
                         Сортировка товаров
                     </button>
                     <div class="dropdown-content">
-                        <a href="#">По стоимости</a>
-                        <a href="#">По популярности</a>
+                        <a href="#" data-sort-by="price">По стоимости</a>
+                        <a href="#" data-sort-by="name">По названию</a>
+                        <a href="#" data-sort-by="grammage">По граммовке</a>
                     </div>
                 </div>
 

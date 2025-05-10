@@ -42,7 +42,6 @@ async def get_product(
 ):
     product = await product_service.get_product(
         product_id=product_query.product_id,
-        package_id=product_query.package_id,
     )
     if product:
         return product
