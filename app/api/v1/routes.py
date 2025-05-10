@@ -13,4 +13,4 @@ routers_list = [
 
 for router in routers_list:
     router.tags.append("v1")
-    routers.include_router(router, prefix="/v1")
+    routers.include_router(router, prefix="/api/v1")
