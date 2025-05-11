@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Личный кабинет - Печенье Курабье</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/css/header.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+        <link rel="stylesheet" type="text/css" href="/css/profile-page.css" />
+        <!-- Новые стили -->
+        <!-- Favicons -->
+        <link
+            rel="icon"
+            type="image/png"
+            href="/icon/favicon-96x96.png"
+            sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg" />
+    </head>
+    <body>
+        <header cl        <header class="header">
+            <ul>
+                <li><a href="/#main">Главная</a></li>
+                <li><a href="/#catalog">Каталог</a></li>
+                <li><a href="/#contacts">Контакты</a></li>
+            </ul>
+            <div class="header-user-actions">
+                <!-- Обновленный блок в хедере -->
+                <a href="/basket.html" class="header-basket-link">
+                    <img
+                        src="/img/cart.svg"
+                        alt="Корзина"
+                        class="cart-icon header-cart-icon"
+                    />
+                </a>
+                <a
+                    href="/profile"
+                    id="headerUsername"
+                    class="header-username"
+                    style="display: none"
+                ></a>
+                <button
+                    id="logoutButton"
+                    class="header-logout-btn"
+                    style="display: none"
+                >
+                    Выйти
+                </button>
+                <a
+                    href="/login"
+                    id="loginLinkHeader"
+                    class="header-login-link"
+                    style="display: none"
+                    >Войти</a
+                >
+            </div>
+        </header>
+        <main class="main profile-page-container">
+            <div class="profile-header">
+                <h1>Личный кабинет</h1>
+                <p>
+                    Добро пожаловать,
+                    <span id="profileUsername">пользователь</span>!
+                </p>
+            </div>
+
+            <section class="profile-orders">
+                <h2>Мои заказы</h2>
+                <div id="ordersList" class="orders-grid">
+                    <p class="loading-orders">Загрузка ваших заказов...</p>
+                    <!-- Заказы будут вставлены сюда -->
+                    <!-- Пример карточки заказа (будет генерироваться JS) -->
+                    <!--
+                <div class="order-card">
+                    <div class="order-card-header">
+                        <span class="order-id">Заказ #101</span>
+                        <span class="order-status status-delivered">Доставлен</span>
+                    </div>
+                    <div class="order-card-body">
+                        <p class="order-date">Дата: 26.10.2023</p>
+                        <p class="order-total">Сумма: 1250.50 руб.</p>
+                        <div class="order-items-preview">
+                            <small>Состав: Овсяное печенье 300г, Лимонад, ...еще 2 товара</small>
+                        </div>
+                    </div>
+                    <div class="order-card-footer">
+                        <a href="/order-details/101" class="details-link">Подробнее</a>
+                    </div>
+                </div>
+                --></div>
+                <p
+                    id="noOrdersMessage"
+                    style="display: none; text-align: center; padding: 20px"
+                >
+                    У вас пока нет заказов.
+                    <a href="/#catalog">Перейти в каталог?</a>
+                </p>
+            </section>
+
+            <!-- Сюда можно добавить другие секции ЛК: смена пароля, адреса и т.д. -->
+        </main>
+
+        <script src="/js/authUtils.js" defer></script>
+        <!-- Для getCookie -->
+        <script src="/js/profile-page.js" defer></script>
+        <script src="/js/header-auth-status.js" defer></script>
+        <!-- Для обновления хедера -->
+    </body>
+</html>
