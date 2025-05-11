@@ -1,52 +1,115 @@
+:root {
+    --myColor: #da671a;
+    --primary-text-color: #683c1a;
+    --container-bg-color: #f3e3d3;
+    --card-bg-color: #fffdf6;
+    --status-delivered: #2ecc71;
+    --status-processing: #f39c12;
+    --status-cancelled: #e74c3c; /* Пример */
+}
 header {
-  background: #FFFDF6;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 50px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+    background: #fffdf6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 ul {
-  list-style: none;
-  margin: 0;
-  display: flex;
-  padding: 0px;
-  gap: 30px;
+    list-style: none;
+    margin: 0;
+    display: flex;
+    padding: 0px;
+    gap: 30px;
 }
 
 li {
-  display: inline;
+    display: inline;
 }
 
 a {
-  font-weight: 700;
-  color: #683C1A;
-  text-decoration: none;
-  font-size: 20px;
+    font-weight: 700;
+    color: #683c1a;
+    border: none;
+    background-color: #fffdf6;
+    text-decoration: none;
+    font-size: 20px;
 }
 
 .cart-icon {
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {
-  header {
-    padding: 10px 30px;
-  }
+    header {
+        padding: 10px 30px;
+    }
 
-  a {
-    font-size: 17px;
-  }
+    a {
+        font-size: 17px;
+    }
 
-  .cart-icon {
-    width: 25px;
-    height: 25px;
-  }
+    .cart-icon {
+        width: 25px;
+        height: 25px;
+    }
+}
+/* Стили для хедера (дублируют и расширяют то, что было в auth-form.js) */
+.header-user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.header-logout-btn:hover,
+.header-login-link:hover {
+    background-color: var(--primary-text-color);
+    color: var(--card-bg-color);
+}
+
+.header-logout-btn,
+.header-login-link {
+    font-family: "JoNova", sans-serif;
+    color: var(--primary-text-color);
+    background-color: transparent;
+    border: 1px solid var(--primary-text-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.header-username {
+    font-weight: 500;
+    color: var(--primary-text-color);
+}
+.header-logout-btn,
+.header-login-link {
+    font-family: "JoNova", sans-serif;
+    color: var(--primary-text-color);
+    background-color: transparent;
+    border: 1px solid var(--primary-text-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+.header-logout-btn:hover,
+.header-login-link:hover {
+    background-color: var(--primary-text-color);
+    color: var(--card-bg-color);
+}
+.header-basket-link img {
+    width: 28px; /* Как в product-detail-tabs */
+    height: 28px;
 }

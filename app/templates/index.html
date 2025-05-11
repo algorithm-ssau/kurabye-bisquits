@@ -39,14 +39,43 @@
     <body>
         <header class="header">
             <ul>
-                <li><a href="#main">Главная</a></li>
-                <li><a href="#catalog">Каталог</a></li>
-                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="/#main">Главная</a></li>
+                <li><a href="/#catalog">Каталог</a></li>
+                <li><a href="/#contacts">Контакты</a></li>
             </ul>
-            <a href="basket.html">
-                <img src="img/cart.svg" alt="корзина" class="cart-icon" />
-            </a>
+            <div class="header-user-actions">
+                <!-- Обновленный блок в хедере -->
+                <a href="/basket.html" class="header-basket-link">
+                    <img
+                        src="/img/cart.svg"
+                        alt="Корзина"
+                        class="cart-icon header-cart-icon"
+                    />
+                </a>
+                <a
+                    href="/profile"
+                    id="headerUsername"
+                    class="header-username"
+                    style="display: none"
+                ></a>
+                <button
+                    id="logoutButton"
+                    class="header-logout-btn"
+                    style="display: none"
+                >
+                    Выйти
+                </button>
+                <a
+                    href="/login"
+                    id="loginLinkHeader"
+                    class="header-login-link"
+                    style="display: none"
+                    >Войти</a
+                >
+            </div>
         </header>
+
+        <main class="main profile-page-container">
         <script src="js/http/catalogLoader.js" defer></script>
         <main>
             <section id="main" class="main">
@@ -163,7 +192,6 @@
                         height="400"
                         style="border: 0"
                         allowfullscreen=""
-                        loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                     >
                     </iframe>
@@ -171,5 +199,7 @@
             </section>
         </main>
         <script src="js/scroll.js"></script>
+        <script src="/js/authUtils.js" defer></script>
+        <script src="/js/header-auth-status.js" defer></script>
     </body>
 </html>
