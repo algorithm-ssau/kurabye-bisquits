@@ -1,0 +1,149 @@
+main {
+    padding-left: 10vh;
+    padding-right: 10vh;
+    color: #683c1a;
+    font-size: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.titleBasket {
+    position: relative;
+    color: var(--myColor);
+    font-size: 2.5rem;
+    font-weight: 700;
+    padding-top: 10vh;
+}
+
+.bisquit {
+    margin-top: 75px;
+    width: 7%;
+    height: auto;
+    max-width: 100%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .bisquit {
+        display: none;
+    }
+}
+
+.order-table {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 20px;
+    align-items: flex-start;
+    background: #f3e3d3;
+    border-radius: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background: #f3e3d3;
+    padding: 10px;
+    text-align: left;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px dashed #683c1a;
+}
+
+tfoot .total td {
+    font-weight: bold;
+    font-size: 1.1em;
+    border-top: 2px solid #683c1a;
+    padding-top: 10px;
+    letter-spacing: 1px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    height: 30px;
+}
+
+.order-table button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px 0px;
+}
+
+.order-table button img {
+    width: 30px;
+    height: 30px;
+}
+
+.counter {
+    font-size: 23px;
+    font-weight: 500;
+    margin: 0px 0px;
+}
+
+.footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+button {
+    background-color: var(--myColor);
+    color: #fffdf6;
+    font-family: "JoNova", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 28px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .titleBasket {
+        font-size: 1.5rem;
+    }
+
+    .order-table {
+        flex-direction: column;
+        padding: 10px;
+        gap: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    thead th,
+    tbody td,
+    tfoot .total td {
+        padding: 6px;
+    }
+
+    .order-table button img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .counter {
+        font-size: 18px;
+    }
+
+    button {
+        font-size: 18px;
+    }
+}

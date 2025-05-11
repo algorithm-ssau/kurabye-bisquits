@@ -14,7 +14,7 @@ class AbstractUserRepository(ABC):
 
 class AbstractProductRepository(ABC):
     @abstractmethod
-    async def get_product(self, product_id: int, package_id: int) -> ProductFullInfo | None:
+    async def get_product(self, product_id: int) -> ProductFullInfo | None:
         pass
 
     @abstractmethod

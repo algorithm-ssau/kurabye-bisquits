@@ -5,8 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.config import log_setting
 from core.postgres import db_helper
 from domain.entities.compositionElement import CompositionELement
-from domain.entities.product import Product, ProductFullInfo, UpdateProduct
-from domain.exceptions.productExceptions import ProductNotFoundException
+from domain.entities.product import Product, ProductFullInfo
 from repository.abstractRepositroies import AbstractProductRepository
 from repository.sql.productQueries import SELECT_ALL_RPODUCT_INFORMATION, SELECT_PRODUCTS, UPDATE_PRODUCT
 
@@ -23,7 +22,6 @@ class ProductRepository(AbstractProductRepository):
     async def get_product(
         self,
         product_id: int,
-        package_id: int,
     ) -> ProductFullInfo | None:
         async with self.__session as session:
             # get product from db
@@ -31,7 +29,6 @@ class ProductRepository(AbstractProductRepository):
                 SELECT_ALL_RPODUCT_INFORMATION,
                 params={
                     "product_id": product_id,
-                    "package_id": package_id,
                 },
             )
             db_product = db_product.mappings().fetchone()
@@ -49,6 +46,8 @@ class ProductRepository(AbstractProductRepository):
                     description=db_product["description"],
                     grammage=db_product["grammage"],
                     carbohydrates=db_product["carbohydrates"],
+                    fats=db_product["fats"],
+                    proteins=db_product["proteins"],
                     composition=compositions,
                 )
                 log.info("Open product: %s", product)

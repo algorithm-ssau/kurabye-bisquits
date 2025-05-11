@@ -1,0 +1,154 @@
+.info-switcher {
+    margin-top: 20px;
+    background-color: #fffdf6;
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #e0d8cd;
+}
+
+.info-switcher-buttons {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0d8cd;
+}
+
+.info-tab-btn {
+    flex-grow: 1;
+    padding: 10px 5px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-family: "JoNova", sans-serif;
+    font-size: 1rem;
+    color: #683c1a;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition:
+        color 0.3s,
+        border-color 0.3s;
+    margin-bottom: -2px;
+}
+
+.info-tab-btn:hover {
+    color: var(--myColor, #da671a);
+}
+
+.info-tab-btn.active {
+    color: var(--myColor, #da671a);
+    border-bottom-color: var(--myColor, #da671a);
+    font-weight: 700;
+}
+
+.info-switcher-content .info-pane {
+    display: none;
+    padding-top: 10px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.info-switcher-content .info-pane.active {
+    display: block;
+}
+
+#infoDescription p {
+    margin: 0;
+}
+
+#infoComposition ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+#infoComposition ul li {
+    margin-bottom: 5px;
+}
+
+.info-pane .nutrients {
+    margin-top: 0;
+    font-size: inherit;
+}
+.info-pane .nutrients p {
+    font-weight: 500;
+    margin-bottom: 5px;
+.info-pane .nutrients p strong {
+    color: var(--myColor, #da671a);
+}
+
+@media (max-width: 768px) {
+    .info-switcher-buttons {
+        flex-direction: column;
+        border-bottom: none;
+    }
+    .info-tab-btn {
+        border-bottom: 2px solid #e0d8cd;
+        margin-bottom: 0;
+    }
+    .info-tab-btn.active {
+        border-bottom-color: var(--myColor, #da671a);
+    }
+    .info-tab-btn:last-child {
+        border-bottom: none;
+    }
+}
+
+.product-page-container .form-row {
+    align-items: flex-end;
+    padding-bottom: 15px;
+}
+.product-page-container .titleProduct {
+    padding-top: 5vh;
+}
+
+.container.product-main-info {
+    gap: 25px;
+}
+
+.right-part .product-details h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+#dynamicPriceList .counter {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    font-size: 1.1rem;
+    padding: 6px 0;
+    -moz-appearance: textfield;
+}
+#dynamicPriceList .counter::-webkit-outer-spin-button,
+#dynamicPriceList .counter::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#dynamicPriceList .quantity-btn {
+    background-color: #f3e3d3;
+    border: 1px solid #ccc;
+}
+#dynamicPriceList .quantity-btn.minus {
+    border-radius: 5px 0 0 5px;
+}
+#dynamicPriceList .quantity-btn.plus {
+    border-radius: 0 5px 5px 0;
+}
+
+.header-cart-icon {
+    width: 28px;
+    height: 28px;
+}
+.recommendations-title {
+    color: var(--myColor);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.recommendations-grid {
+    padding-left: 0;
+    padding-right: 0;
+}

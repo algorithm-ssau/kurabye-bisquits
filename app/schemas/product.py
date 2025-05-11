@@ -37,4 +37,3 @@ class ProductListQueryParams(BaseModel):
 
 class ProductQueryParams(BaseModel):
     product_id: int
-    package_id: int

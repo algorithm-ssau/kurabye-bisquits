@@ -10,8 +10,8 @@ class ProductService(AbstractProductService):
     def __init__(self, product_repository):
         self.__product_repository: AbstractProductRepository = product_repository
 
-    async def get_product(self, product_id: int, package_id: int) -> ProductFullInfo | None:
-        return await self.__product_repository.get_product(product_id, package_id)
+    async def get_product(self, product_id: int) -> ProductFullInfo | None:
+        return await self.__product_repository.get_product(product_id)
 
     async def get_products(self, limit: int = 10, offset: int = 0) -> list[Product] | None:
         return await self.__product_repository.get_products(limit=limit, offset=offset)

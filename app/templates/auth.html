@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Вход / Регистрация - Печенье Курабье</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/css/header.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+        <link rel="stylesheet" type="text/css" href="/css/auth-form.css" />
+        <script src="/js/header-auth-status.js"></script>
+        <!-- Favicons -->
+        <link
+            rel="icon"
+            type="image/png"
+            href="/icon/favicon-96x96.png"
+            sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg" />
+        <link rel="shortcut icon" href="/icon/favicon.ico" />
+    </head>
+    <body>
+        <header class="header"        <header class="header">
+            <ul>
+                <li><a href="/#main">Главная</a></li>
+                <li><a href="/#catalog">Каталог</a></li>
+                <li><a href="/#contacts">Контакты</a></li>
+            </ul>
+            <div class="header-user-actions">
+                <!-- Обновленный блок в хедере -->
+                <a href="/basket.html" class="header-basket-link">
+                    <img
+                        src="/img/cart.svg"
+                        alt="Корзина"
+                        class="cart-icon header-cart-icon"
+                    />
+                </a>
+                <a
+                    href="/profile"
+                    id="headerUsername"
+                    class="header-username"
+                    style="display: none"
+                ></a>
+                <button
+                    id="logoutButton"
+                    class="header-logout-btn"
+                    style="display: none"
+                >
+                    Выйти
+                </button>
+                <a
+                    href="/login"
+                    id="loginLinkHeader"
+                    class="header-login-link"
+                    style="display: none"
+                    >Войти</a
+                >
+            </div>
+        </header>
+
+        <main class="main profile-page-container">
+        <main class="main auth-page-container">
+            <div class="auth-form-wrapper">
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" data-form="login">
+                        Вход
+                    </button>
+                    <button class="auth-tab-btn" data-form="register">
+                        Регистрация
+                    </button>
+                </div>
+
+                <!-- Форма Входа -->
+                <form id="loginForm" class="auth-form active-form">
+                    <h2>Вход в аккаунт</h2>
+                    <div
+                        id="loginError"
+                        class="form-message error-message"
+                        style="display: none"
+                    ></div>
+
+                    <div class="form-group">
+                        <label for="loginUsername"
+                            >Имя пользователя (логин)</label
+                        >
+                        <input
+                            type="text"
+                            id="loginUsername"
+                            name="username"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Пароль</label>
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            name="password"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="auth-submit-btn">Войти</button>
+                </form>
+
+                <!-- Форма Регистрации -->
+                <form id="registerForm" class="auth-form">
+                    <h2>Создание аккаунта</h2>
+                    <div
+                        id="registerError"
+                        class="form-message error-message"
+                        style="display: none"
+                    ></div>
+                    <div
+                        id="registerSuccess"
+                        class="form-message success-message"
+                        style="display: none"
+                    ></div>
+
+                    <div class="form-group">
+                        <label for="registerUsername"
+                            >Имя пользователя (логин)</label
+                        >
+                        <input
+                            type="text"
+                            id="registerUsername"
+                            name="user_name"
+                            required
+                            minlength="1"
+                            maxlength="255"
+                        />
+                        <small
+                            >Без пробелов и спецсимволов, минимум 1
+                            буква.</small
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Пароль</label>
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            name="password"
+                            required
+                            minlength="8"
+                        />
+                        <small
+                            >Минимум 8 символов, включая хотя бы один спецсимвол
+                            (например, !@#$%^&*).</small
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPasswordConfirm"
+                            >Подтвердите пароль</label
+                        >
+                        <input
+                            type="password"
+                            id="registerPasswordConfirm"
+                            name="password_confirm"
+                            required
+                            minlength="8"
+                        />
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        Зарегистрироваться
+                    </button>
+                </form>
+            </div>
+        </main>
+        <script src="/js/auth-form.js" defer></script>
+        <script src="/js/header-auth-status.js" defer></script>
+        <script src="/js/authUtils.js" defer></script>
+        <!-- Если getCookie и другие утилиты там -->
+    </body>
+</html>

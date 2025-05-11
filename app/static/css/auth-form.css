@@ -1,0 +1,168 @@
+:root {
+    --myColor: #da671a; /* Основной оранжевый/коричневый акцент */
+    --primary-text-color: #683C1A; /* Основной цвет текста */
+    --form-bg-color: #F3E3D3;    /* Фон формы, как у .container */
+    --input-bg-color: #FFFDF6;   /* Фон инпутов */
+    --button-text-color: #FFFDF6;/* Цвет текста на кнопке */
+    --error-color: #c0392b;      /* Цвет для сообщений об ошибках */
+    --success-color: #27ae60;    /* Цвет для сообщений об успехе */
+}
+
+.auth-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Чтобы при длинных ошибках форма не прыгала по центру */
+    padding-top: 10vh;      /* Отступ сверху, как у .titleProduct */
+    padding-bottom: 5vh;
+    min-height: calc(100vh - 60px); /* 60px - примерная высота хедера */
+}
+
+.auth-form-wrapper {
+    background-color: var(--form-bg-color);
+    padding: 30px 40px;
+    border-radius: 20px; /* Как у .container */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Максимальная ширина формы */
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #dca97c; /* Граница как у табов в product-detail */
+}
+
+.auth-tab-btn {
+    flex-grow: 1;
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-family: 'JoNova', sans-serif;
+    font-size: 1.1rem;
+    color: var(--primary-text-color);
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+    margin-bottom: -2px;
+}
+.auth-tab-btn:hover {
+    color: var(--myColor);
+}
+.auth-tab-btn.active {
+    color: var(--myColor);
+    border-bottom-color: var(--myColor);
+    font-weight: 700;
+}
+
+.auth-form {
+    display: none; /* Скрываем формы по умолчанию */
+    flex-direction: column;
+    gap: 20px; /* Отступ между группами полей */
+}
+.auth-form.active-form {
+    display: flex; /* Показываем активную форму */
+}
+
+.auth-form h2 {
+    color: var(--myColor);
+    font-size: 1.8rem; /* Размер заголовка формы */
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--primary-text-color);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"] { /* Добавил email на всякий случай */
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px; /* Скругление как у package-option */
+    font-family: 'JoNova', sans-serif;
+    font-size: 1rem;
+    background-color: var(--input-bg-color);
+    color: var(--primary-text-color);
+    transition: border-color 0.3s ease;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="email"]:focus {
+    outline: none;
+    border-color: var(--myColor);
+    box-shadow: 0 0 0 2px rgba(218, 103, 26, 0.2); /* Легкая тень при фокусе */
+}
+
+.form-group small {
+    font-size: 0.8rem;
+    color: #7f5e45; /* Мягкий цвет для подсказок */
+    margin-top: 5px;
+}
+
+.auth-submit-btn {
+    background-color: var(--myColor);
+    color: var(--button-text-color);
+    font-family: 'JoNova', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px; /* Как у инпутов */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Отступ сверху для кнопки */
+}
+.auth-submit-btn:hover {
+    background-color: #c3560a; /* Темнее при наведении */
+}
+.auth-submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* Сообщения об ошибках/успехе */
+.form-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: left;
+}
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.error-message ul {
+    margin: 0;
+    padding-left: 20px;
+}
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .auth-form-wrapper {
+        padding: 20px;
+        margin: 0 15px; /* Чтобы не прилипала к краям на мобильных */
+    }
+    .auth-form h2 {
+        font-size: 1.5rem;
+    }
+}

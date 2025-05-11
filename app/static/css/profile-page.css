@@ -1,0 +1,178 @@
+/* static/css/profile-page.css */
+:root {
+    --myColor: #da671a;
+    --primary-text-color: #683c1a;
+    --container-bg-color: #f3e3d3;
+    --card-bg-color: #fffdf6;
+    --status-delivered: #2ecc71;
+    --status-processing: #f39c12;
+    --status-cancelled: #e74c3c; /* Пример */
+}
+
+.profile-page-container {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    max-width: 1000px; /* Ограничим ширину для ЛК */
+    margin: 0 auto;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: var(--container-bg-color);
+    border-radius: 15px;
+}
+.profile-header h1 {
+    color: var(--myColor);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.profile-header p {
+    font-size: 1.2rem;
+    color: var(--primary-text-color);
+}
+#profileUsername {
+    font-weight: 700;
+}
+
+.profile-orders {
+    margin-bottom: 40px;
+}
+.profile-orders h2 {
+    font-size: 2rem;
+    color: var(--myColor);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0d8cd;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Один заказ в ряд для начала, можно изменить */
+    gap: 20px;
+}
+
+.loading-orders,
+#noOrdersMessage {
+    color: var(--primary-text-color);
+    font-style: italic;
+}
+#noOrdersMessage a {
+    color: var(--myColor);
+    text-decoration: underline;
+}
+
+.order-card {
+    background-color: var(--card-bg-color);
+    border: 1px solid #e0d8cd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+}
+.order-card:hover {
+    transform: translateY(-5px);
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #dca97c;
+}
+.order-id {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+}
+.order-status {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+}
+.status-delivered {
+    background-color: var(--status-delivered);
+}
+.status-processing {
+    background-color: var(--status-processing);
+}
+.status-В_обработке {
+    background-color: var(--status-processing);
+} /* Для русского варианта */
+.status-Доставлен {
+    background-color: var(--status-delivered);
+} /* Для русского варианта */
+/* Добавь другие статусы по необходимости */
+
+.order-card-body p {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+.order-total {
+    font-weight: bold;
+}
+.order-items-preview {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
+.order-items-preview small {
+    display: block;
+}
+
+.order-card-footer {
+    margin-top: 15px;
+    text-align: right;
+}
+.details-link {
+    color: var(--myColor);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 15px;
+    border: 1px solid var(--myColor);
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+.details-link:hover {
+    background-color: var(--myColor);
+    color: white;
+}
+
+/* /* Стили для хедера (дублируют и расширяют то, что было в auth-form.js) */
+.header-user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.header-username {
+    font-weight: 500;
+    color: var(--primary-text-color);
+}
+.header-logout-btn,
+.header-login-link {
+    font-family: "JoNova", sans-serif;
+    color: var(--primary-text-color);
+    background-color: transparent;
+    border: 1px solid var(--primary-text-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+.header-logout-btn:hover,
+.header-login-link:hover {
+    background-color: var(--primary-text-color);
+    color: var(--card-bg-color);
+}
+.header-basket-link img {
+    width: 28px; /* Как в product-detail-tabs */
+    height: 28px;
+}

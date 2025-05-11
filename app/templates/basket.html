@@ -1,93 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<link rel="stylesheet" type="text/css" href="css/basket.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/fonts.css">
-<link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/basket.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="css/header.css" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+    <script src="/js/header-auth-status.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Овсяное печенье</title>
-  <link rel="icon" type="image/png" href="icon/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="icon/favicon.svg" />
-  <link rel="shortcut icon" href="icon/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content="MyWebSite" />
-  <link rel="manifest" href="/site.webmanifest" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Овсяное печенье</title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="icon/favicon-96x96.png"
+            sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="icon/favicon.svg" />
+        <link rel="shortcut icon" href="icon/favicon.ico" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="icon/apple-touch-icon.png"
+        />
+        <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <script src="/js/authUtils.js"></script>
+        <!-- Auth check (cookies) -->
+        <script>
+            if (!checkAuthAndRedirect("/login")) {
+            }
+        </script>
+    </head>
 
-<body>
-  <header class="header">
-    <ul>
-      <li><a href="index.html#main">Главная</a></li>
-      <li><a href="index.html#catalog">Каталог</a></li>
-      <li><a href="index.html#contacts">Контакты</a></li>
-    </ul>
-    <a href="basket.html">
-      <img src="img/cart.svg" alt="корзина" class="cart-icon">
-    </a>
+    <body>
+        <header class="header">
+            <ul>
+                <li><a href="/#main">Главная</a></li>
+                <li><a href="/#catalog">Каталог</a></li>
+                <li><a href="/#contacts">Контакты</a></li>
+            </ul>
+            <div class="header-user-actions">
+                <!-- Обновленный блок в хедере -->
+                <a href="/basket.html" class="header-basket-link">
+                    <img
+                        src="/img/cart.svg"
+                        alt="Корзина"
+                        class="cart-icon header-cart-icon"
+                    />
+                </a>
+                <a
+                    href="/profile.html"
+                    id="headerUsername"
+                    class="header-username"
+                    style="display: none"
+                ></a>
+                <button
+                    id="logoutButton"
+                    class="header-logout-btn"
+                    style="display: none"
+                >
+                    Выйти
+                </button>
+                <a
+                    href="/login"
+                    id="loginLinkHeader"
+                    class="header-login-link"
+                    style="display: none"
+                    >Войти</a
+                >
+            </div>
+        </header>
 
-  </header>
-  <main>
-    <div class="form-row">
-      <h1 class="titleBasket">Корзина</h1>
-      <img src="img/main/bisquit.svg" class="bisquit" alt="печенька">
-    </div>
-    <div class="order-table">
-      <table>
-        <thead>
-          <tr>
-            <th>ТОВАР</th>
-            <th>КОЛИЧЕСТВО</th>
-            <th>ЦЕНА ЗА ШТУКУ</th>
-            <th>СТОИМОСТЬ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Овсянное 300 гр</td>
-            <td>
-              <div class="button-group">
-                <button><img src="img/minus.svg" alt="-"></button>
-                <span class="counter">1</span> <!-- Счетчик -->
-                <button><img src="img/plus.svg" alt="+"></button>
-              </div>
-            </td>
-            <td>350 ₽</td>
-            <td>350 ₽</td>
-          </tr>
-          <tr>
-            <td>Овсянное 500 гр</td>
-            <td>
-              <div class="button-group">
-                <button><img src="img/minus.svg" alt="-"></button>
-                <span class="counter">1</span> <!-- Счетчик -->
-                <button><img src="img/plus.svg" alt="+"></button>
-              </div>
-            </td>
-            <td>500 ₽</td>
-            <td>500 ₽</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr class="total">
-            <td colspan="3">ИТОГО</td>
-            <td>850 ₽</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </main>
+        <main>
+            <div class="form-row">
+                <h1 class="titleBasket">Корзина</h1>
+                <img
+                    src="img/main/bisquit.svg"
+                    class="bisquit"
+                    alt="печенька"
+                />
+            </div>
+            <div class="order-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ТОВАР</th>
+                            <th>КОЛИЧЕСТВО</th>
+                            <th>ЦЕНА ЗА ШТУКУ</th>
+                            <th>СТОИМОСТЬ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Овсянное 300 гр</td>
+                            <td>
+                                <div class="button-group">
+                                    <button>
+                                        <img src="img/minus.svg" alt="-" />
+                                    </button>
+                                    <span class="counter">1</span>
+                                    <!-- Счетчик -->
+                                    <button>
+                                        <img src="img/plus.svg" alt="+" />
+                                    </button>
+                                </div>
+                            </td>
+                            <td>350 ₽</td>
+                            <td>350 ₽</td>
+                        </tr>
+                        <tr>
+                            <td>Овсянное 500 гр</td>
+                            <td>
+                                <div class="button-group">
+                                    <button>
+                                        <img src="img/minus.svg" alt="-" />
+                                    </button>
+                                    <span class="counter">1</span>
+                                    <!-- Счетчик -->
+                                    <button>
+                                        <img src="img/plus.svg" alt="+" />
+                                    </button>
+                                </div>
+                            </td>
+                            <td>500 ₽</td>
+                            <td>500 ₽</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total">
+                            <td colspan="3">ИТОГО</td>
+                            <td>850 ₽</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </main>
 
-  <div class="footer">
-    <a href="order.html">
-      <button>ОФОРМИТЬ ЗАКАЗ</button>
-    </a>
-  </div>
-  <script src="js/lgbt.js"></script>
-</body>
-
+        <div class="footer">
+            <a href="/order">
+                <button>ОФОРМИТЬ ЗАКАЗ</button>
+            </a>
+        </div>
+        <script src="/js/header-auth-status.js" defer></script>
+        <script src="js/lgbt.js"></script>
+    </body>
 </html>
