@@ -1,0 +1,177 @@
+:root {
+    --myColor: #da671a;
+    --primary-text-color: #683c1a;
+    --container-bg-color: #f3e3d3;
+    --card-bg-color: #fffdf6;
+    --status-delivered: #2ecc71;
+    --status-processing: #3498db; /* Processing - синий */
+}
+
+.order-detail-page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.order-detail-header {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--container-bg-color);
+}
+.order-detail-header h1 {
+    color: var(--myColor);
+    font-size: 2.2rem;
+    margin: 0;
+}
+#orderDetailId {
+    color: var(--primary-text-color);
+}
+.back-to-profile-link {
+    color: var(--primary-text-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border: 1px solid var(--primary-text-color);
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+.back-to-profile-link:hover {
+    background-color: var(--primary-text-color);
+    color: var(--card-bg-color);
+}
+
+.order-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.order-summary-card,
+.order-items-card {
+    background-color: var(--card-bg-color);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+.order-summary-card h2,
+.order-items-card h2 {
+    font-size: 1.6rem;
+    color: var(--myColor);
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #f0f0f0;
+}
+.summary-item:last-child {
+    border-bottom: none;
+}
+.summary-label {
+    font-weight: 500;
+    color: #555;
+}
+
+#summaryOrderStatus {
+    color: white;
+}
+
+.summary-value {
+    color: var(--primary-text-color);
+    font-weight: 600;
+    text-align: right;
+}
+.summary-value.order-status {
+    /* Для статуса в саммари */
+    font-size: 1rem; /* Немного больше, чем в карточке списка */
+    padding: 4px 10px;
+    /* Стили для status-processing, status-delivered и т.д. берутся из profile-page.css */
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.order-items-table th,
+.order-items-table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.order-items-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+    color: #444;
+}
+.order-items-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.order-items-table .item-name {
+    font-weight: 500;
+}
+.order-items-table .item-quantity,
+.order-items-table .item-price,
+.order-items-table .item-subtotal {
+    text-align: right;
+}
+
+.order-items-table tfoot td {
+    padding-top: 15px;
+    border-top: 2px solid var(--myColor);
+    font-size: 1.1rem;
+}
+.text-right {
+    text-align: right;
+}
+.strong {
+    font-weight: 700;
+}
+
+.loading-message,
+.error-message-page {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 30px;
+    color: var(--primary-text-color);
+}
+.error-message-page {
+    color: #c0392b;
+}
+
+@media (max-width: 600px) {
+    .order-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .order-detail-header h1 {
+        font-size: 1.8rem;
+    }
+    .summary-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .summary-value {
+        text-align: left;
+        margin-top: 3px;
+    }
+    .order-items-table th,
+    .order-items-table td {
+        padding: 8px 5px;
+        font-size: 0.9rem;
+    }
+    .order-items-table .item-quantity,
+    .order-items-table .item-price,
+    .order-items-table .item-subtotal {
+        min-width: 60px; /* Чтобы не слишком сжимались */
+    }
+}

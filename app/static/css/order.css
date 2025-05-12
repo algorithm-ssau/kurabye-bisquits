@@ -235,3 +235,51 @@ button {
         font-size: 18px;
     }
 }
+
+.form-row.full-width label {
+    /* Чтобы метка была над textarea */
+    margin-bottom: 5px;
+}
+.form-row.full-width textarea {
+    width: 60%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #fffdf6;
+    font-family: "JoNova", sans-serif;
+    border-radius: 18px;
+    box-sizing: border-box;
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Стили для сообщений формы (аналогично auth-form.css) */
+.form-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    text-align: left;
+    width: 100%; /* Чтобы занимало всю ширину формы */
+    box-sizing: border-box;
+}
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.error-message ul {
+    /* Если ошибки списком */
+    margin: 0;
+    padding-left: 20px;
+}
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.order-submit-footer {
+    /* Для кнопки подтверждения, если она в отдельном .footer */
+    text-align: center;
+    margin-top: 20px;
+}
