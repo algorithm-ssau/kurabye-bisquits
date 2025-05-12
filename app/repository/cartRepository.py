@@ -10,11 +10,13 @@ from core.postgres import db_helper
 from domain.entities.cart import Cart
 from domain.entities.product import Product
 from domain.exceptions.cartExceptions import CartDeleteError, CartInsertError
+from domain.exceptions.productExceptions import InsufficientStockError
 from repository.abstractRepositroies import AbstractCartRepository
 from repository.sql.cartQueries import (
     CREATE_CART,
     DELETE_ALL_PRODUCTS,
     DELETE_QUANTITY_OF_PRODUCT,
+    GET_TOTAL_PRODUCT_QUANTITY,
     SELECT_CART_ITEMS,
     UPSERT_PRODUCT_IN_CART,
 )
@@ -46,7 +48,18 @@ class CartRepository(AbstractCartRepository):
     ) -> bool:
         async with self.__session as session:
             try:
-                await session.execute(
+                total_quantity_of_product = await session.execute(
+                    GET_TOTAL_PRODUCT_QUANTITY, params={"product_id": product_id}
+                )
+                total_quantity_of_product = total_quantity_of_product.mappings().fetchone()
+                if not total_quantity_of_product:
+                    return False
+
+                total_quantity_of_product = total_quantity_of_product["total_quantity"]
+                if product_quantity > total_quantity_of_product:
+                    raise InsufficientStockError()
+
+                quantity = await session.execute(
                     UPSERT_PRODUCT_IN_CART,
                     params={
                         "cart_id": cart_id,
@@ -54,6 +67,15 @@ class CartRepository(AbstractCartRepository):
                         "quantity": product_quantity,
                     },
                 )
+                quantity = quantity.mappings().fetchone()
+
+                if quantity:
+                    quantity = quantity["quantity"]
+
+                    if quantity > total_quantity_of_product:
+                        await session.rollback()
+                        raise InsufficientStockError()
+
                 await session.commit()
                 return True
 

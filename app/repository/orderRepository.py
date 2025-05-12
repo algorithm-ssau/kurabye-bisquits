@@ -10,9 +10,11 @@ from domain.entities.constants import DELIVERED, NO_STATUS
 from domain.entities.order import CreateOrder, Order, OrderFullInfo, UpdateOrder
 from repository.abstractRepositroies import AbstractOrderRepository
 from repository.sql.orderQueries import (
+    CLEAR_INVENTORY,
     CREATE_ORDER,
     GET_ALL_ORDERS,
     GET_ORDER,
+    GET_USER_ORDERS,
     PLACE_CART_ITEMS_TO_ORDER,
     SAFE_DELETE_ORDER,
     UPDATE_ORDER_STATUS,
@@ -35,15 +37,20 @@ class OrderRepository(AbstractOrderRepository):
                     CREATE_ORDER,
                     params={
                         "user_id": order.user_id,
-                        "shipping_address": order.shipping_adderess,
+                        "shipping_address": order.shipping_address,
                         "status_id": order.status_id,
                         "order_comment": order.comment,
                     },
                 )
+
                 db_order = db_order.mappings().fetchone()
                 log.info(db_order)
-                await session.commit()
                 if db_order:
+                    await session.execute(
+                        PLACE_CART_ITEMS_TO_ORDER, params={"user_id": order.user_id, "order_id": db_order["order_id"]}
+                    )
+                    await session.execute(CLEAR_INVENTORY, params={"order_id": db_order["order_id"]})
+                    await session.commit()
                     return OrderFullInfo(order_id=db_order["order_id"], **order.model_dump())
                 # TODO: raise error
             except DBAPIError as error:
@@ -75,12 +82,11 @@ class OrderRepository(AbstractOrderRepository):
 
         return False
 
-    async def get_order(self, order_id: int) -> Order | None:
+    async def get_order(self, order_id: int) -> OrderFullInfo | None:
         async with self.__session as session:
             order = await session.execute(GET_ORDER, params={"order_id": order_id})
             order = order.mappings().fetchone()
             if order:
-                order = Order(**order)
                 return order
             return None
 
@@ -99,14 +105,17 @@ class OrderRepository(AbstractOrderRepository):
     async def get_user_orders(
         self,
         user_id: int,
-        status_id: int | None,
+        status_id: int | None = None,
         limit: int = 10,
         offset: int = 0,
     ) -> list[Order] | None:
         """
         If status_id is None, the method will return all users orders.
         """
-        pass
+        async with self.__session as session:
+            orders_db = await session.execute(GET_USER_ORDERS, params={"user_id": user_id})
+            orders = [Order(**order) for order in orders_db.mappings().fetchall()]
+            return orders if orders else None
 
     async def update_order(self, order_id, update_order: UpdateOrder) -> Order | None:
         """In this realization this method allow to update only order status"""
