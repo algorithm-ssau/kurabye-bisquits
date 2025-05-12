@@ -28,7 +28,7 @@ async def get_products(
         return products
 
     log.warning(
-        "There are no product founds in the database. Parametrs: limit %s offset %s",
+        "There are no product founds in the database. Parameters: limit %s offset %s",
         product_query.limit,
         product_query.offset,
     )
