@@ -104,64 +104,38 @@
 
                 <!-- Форма Регистрации -->
                 <form id="registerForm" class="auth-form">
-                    <h2>Создание аккаунта</h2>
-                    <div
-                        id="registerError"
-                        class="form-message error-message"
-                        style="display: none"
-                    ></div>
-                    <div
-                        id="registerSuccess"
-                        class="form-message success-message"
-                        style="display: none"
-                    ></div>
+                               <h2>Создание аккаунта</h2>
+                               <div id="registerError" class="form-message error-message" style="display:none;"></div>
+                               <div id="registerSuccess" class="form-message success-message" style="display:none;"></div>
 
-                    <div class="form-group">
-                        <label for="registerUsername"
-                            >Имя пользователя (логин)</label
-                        >
-                        <input
-                            type="text"
-                            id="registerUsername"
-                            name="user_name"
-                            required
-                            minlength="1"
-                            maxlength="255"
-                        />
-                        <small
-                            >Без пробелов и спецсимволов, минимум 1
-                            буква.</small
-                        >
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Пароль</label>
-                        <input
-                            type="password"
-                            id="registerPassword"
-                            name="password"
-                            required
-                            minlength="8"
-                        />
-                        <small
-                            >Минимум 8 символов, включая хотя бы один спецсимвол
-                            (например, !@#$%^&*).</small
-                        >
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPasswordConfirm"
-                            >Подтвердите пароль</label
-                        >
-                        <input
-                            type="password"
-                            id="registerPasswordConfirm"
-                            name="password_confirm"
-                            required
-                            minlength="8"
-                        />
-                    </div>
-                    <button type="submit" class="auth-submit-btn">
-                        Зарегистрироваться
-                    </button>
+                               <div class="form-group">
+                                   <label for="registerLogin">Логин</label>
+                                   <input type="text" id="registerLogin" name="login" required minlength="3" maxlength="255">
+                                   <small>От 3 до 255 символов, без пробелов и спецсимволов, минимум 1 буква.</small>
+                               </div>
+                               <div class="form-group">
+                                   <label for="registerName">Имя</label>
+                                   <input type="text" id="registerName" name="name" required minlength="1" maxlength="255">
+                               </div>
+                               <div class="form-group">
+                                   <label for="registerLastName">Фамилия</label>
+                                   <input type="text" id="registerLastName" name="last_name" required minlength="1" maxlength="255">
+                               </div>
+                               <div class="form-group">
+                                   <label for="registerPhone">Телефон</label>
+                                   <input type="tel" id="registerPhone" name="phone" required placeholder="+7 (999) 123-45-67">
+                                   <small>Например: +79991234567 или 89991234567.</small>
+                               </div>
+                               <div class="form-group">
+                                   <label for="registerPassword">Пароль</label>
+                                   <input type="password" id="registerPassword" name="password" required minlength="8">
+                                   <small>Минимум 8 символов, включая хотя бы один спецсимвол (например, !@#$%^&*).</small>
+                               </div>
+                                <div class="form-group">
+                                   <label for="registerPasswordConfirm">Подтвердите пароль</label>
+                                   <input type="password" id="registerPasswordConfirm" name="password_confirm" required minlength="8">
+                               </div>
+                            <button type="submit" class="auth-submit-btn">Зарегистрироваться</button>
                 </form>
             </div>
         </main>

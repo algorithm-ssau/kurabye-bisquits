@@ -1,12 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const profileUsernameEl = document.getElementById("profileUsername");
-  const ordersListEl = document.getElementById("ordersList");
-  const noOrdersMessageEl = document.getElementById("noOrdersMessage");
-  const API_BASE = "/api/v1"; // Your API base URL
+  const elements = {
+    profileDisplayName: document.getElementById("profileDisplayName"),
+    profileLogin: document.getElementById("profileLogin"),
+    profileName: document.getElementById("profileName"),
+    profileLastName: document.getElementById("profileLastName"),
+    profilePhone: document.getElementById("profilePhone"),
+    ordersList: document.getElementById("ordersList"),
+    noOrdersMessage: document.getElementById("noOrdersMessage"),
+  };
+  // Изменяем базовый URL для заказов, если эндпоинт другой
+  const API_GET_USER_ORDERS_URL = "/api/v1/cart/get_user_orders"; // Новый эндпоинт
 
-  function decodeJwtToken(token) {
+  // --- Utility Functions (из authUtils.js или определены здесь) ---
+  function getCookie(name) {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  }
+
+  function decodeJwtTokenPayload(token) {
+    if (!token) return null;
     try {
       const base64Url = token.split(".")[1];
+      if (!base64Url) return null;
       const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
       const jsonPayload = decodeURIComponent(
         atob(base64)
@@ -18,124 +39,204 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       return JSON.parse(jsonPayload);
     } catch (e) {
-      console.error("Failed to decode JWT:", e);
+      console.error("Failed to decode JWT payload:", e);
       return null;
     }
   }
+  // --- End Utility Functions ---
+
+  function populateProfileData(decodedToken) {
+    if (!decodedToken) {
+      if (elements.profileDisplayName)
+        elements.profileDisplayName.textContent = "Ошибка данных";
+      [
+        "profileLogin",
+        "profileName",
+        "profileLastName",
+        "profilePhone",
+      ].forEach((id) => {
+        if (elements[id]) elements[id].textContent = "N/A";
+      });
+      return;
+    }
+
+    const displayName =
+      decodedToken.name && decodedToken.last_name
+        ? `${decodedToken.name} ${decodedToken.last_name}`
+        : decodedToken.login || decodedToken.user_name || "Пользователь";
+
+    if (elements.profileDisplayName)
+      elements.profileDisplayName.textContent = displayName;
+    if (elements.profileLogin)
+      elements.profileLogin.textContent =
+        decodedToken.login || decodedToken.user_name || "N/A";
+    if (elements.profileName)
+      elements.profileName.textContent = decodedToken.name || "N/A";
+    if (elements.profileLastName)
+      elements.profileLastName.textContent = decodedToken.last_name || "N/A";
+    if (elements.profilePhone)
+      elements.profilePhone.textContent = decodedToken.phone || "N/A";
+
+    localStorage.setItem("kurabye_user_name", displayName);
+  }
 
   function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString("ru-RU", options);
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    try {
+      return new Date(dateString).toLocaleDateString("ru-RU", options);
+    } catch (e) {
+      return dateString; // Return original if parsing fails
+    }
+  }
+
+  function getStatusText(statusId) {
+    switch (statusId) {
+      case 1:
+        return "Ожидает подтверждения"; // Pending
+      case 2:
+        return "В обработке"; // Processing
+      case 3:
+        return "Отправлен"; // Shipped
+      case 4:
+        return "Доставлен"; // Delivered
+      case 5:
+        return "Отменен"; // Cancelled
+      default:
+        return "Статус неизвестен";
+    }
+  }
+
+  function getStatusClass(statusId) {
+    switch (statusId) {
+      case 1:
+        return "status-pending";
+      case 2:
+        return "status-processing";
+      case 3:
+        return "status-shipped";
+      case 4:
+        return "status-delivered";
+      case 5:
+        return "status-cancelled";
+      default:
+        return "status-unknown";
+    }
   }
 
   function renderOrder(order) {
     const orderCard = document.createElement("div");
     orderCard.classList.add("order-card");
 
-    let statusClass = "status-unknown";
-    if (order.status_name) {
-      statusClass =
-        "status-" + order.status_name.toLowerCase().replace(/\s+/g, "-");
-    }
+    const statusText = getStatusText(order.status_id);
+    const statusClass = getStatusClass(order.status_id);
 
-    // Ensure items_preview is an array and join it, or use a placeholder
-    let itemsPreviewHtml = "Состав заказа не указан.";
-    if (Array.isArray(order.items_preview) && order.items_preview.length > 0) {
-      itemsPreviewHtml = `<small>Состав: ${order.items_preview.join(", ")}</small>`;
-    } else if (typeof order.items_preview === "string") {
-      // If it's already a string
-      itemsPreviewHtml = `<small>Состав: ${order.items_preview}</small>`;
-    }
-
+    // В API ответа нет total_amount и items_preview, адаптируем карточку
     orderCard.innerHTML = `
             <div class="order-card-header">
-                <span class="order-id">Заказ #${order.order_id}</span>
-                <span class="order-status ${statusClass}">${order.status_name || "Статус неизвестен"}</span>
+                <a href="/order/${order.order_id}" class="order-id">Заказ #${order.order_id}</a>
+                <span class="order-status ${statusClass}">${statusText}</span>
             </div>
             <div class="order-card-body">
-                <p class="order-date">Дата: ${formatDate(order.created_at)}</p>
-                <p class="order-total">Сумма: ${order.total_amount ? order.total_amount.toFixed(2) : "N/A"} руб.</p>
-                <div class="order-items-preview">
-                    ${itemsPreviewHtml}
-                </div>
+                <p class="order-date">Дата оформления: ${formatDate(order.created_at)}</p>
+                <p class="order-address">Адрес доставки: ${order.shipping_address || "Не указан"}</p>
+                ${order.comment ? `<p class="order-comment-display">Комментарий: ${order.comment}</p>` : ""}
             </div>
             <div class="order-card-footer">
-                <a href="/order-details/${order.order_id}" class="details-link">Подробнее</a>
-                <!-- /order-details/ID - это пример, такой страницы пока нет -->
+                <!-- Ссылка "Подробнее" может вести на отдельную страницу деталей заказа, если она будет -->
+                <a href="/order-details/${order.order_id}" class="details-link" style="display:none;">Подробнее</a>
             </div>
         `;
+    // Скрываем кнопку "Подробнее", т.к. пока нет такой страницы и данных для нее в этом API
+    const detailsLink = orderCard.querySelector(".details-link");
+    if (detailsLink) detailsLink.style.display = "none"; // Можно убрать совсем, если не планируется
+
     return orderCard;
   }
 
-  async function fetchUserOrders(token) {
-    if (!ordersListEl || !noOrdersMessageEl) return;
-    ordersListEl.innerHTML =
+  async function fetchUserOrders(token, userId) {
+    if (!elements.ordersList || !elements.noOrdersMessage) return;
+    elements.ordersList.innerHTML =
       '<p class="loading-orders">Загрузка ваших заказов...</p>';
-    noOrdersMessageEl.style.display = "none";
+    elements.noOrdersMessage.style.display = "none";
 
     try {
-      const response = await fetch(`${API_BASE}/orders/my`, {
-        // Предполагаемый эндпоинт
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: "application/json",
+      // Используем новый эндпоинт и передаем user_id как query параметр
+      const response = await fetch(
+        `${API_GET_USER_ORDERS_URL}?user_id=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Токен все еще нужен для авторизации запроса
+            accept: "application/json",
+          },
         },
-      });
-
+      );
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
-          ordersListEl.innerHTML =
+          elements.ordersList.innerHTML =
             '<p class="error-message">Ошибка авторизации при загрузке заказов.</p>';
-          // Опционально редирект на логин, если токен невалиден
-          // window.location.href = '/login.html?reason=invalid_token';
         } else {
-          throw new Error(`HTTP error ${response.status}`);
+          elements.ordersList.innerHTML = `<p class="error-message">Не удалось загрузить заказы (код: ${response.status}).</p>`;
         }
+        console.error(
+          "Failed to fetch orders:",
+          response.status,
+          await response.text().catch(() => ""),
+        );
         return;
       }
-
       const orders = await response.json();
-      ordersListEl.innerHTML = ""; // Clear loading message
-
+      elements.ordersList.innerHTML = ""; // Clear loading message
       if (orders && orders.length > 0) {
         orders.forEach((order) => {
-          ordersListEl.appendChild(renderOrder(order));
+          elements.ordersList.appendChild(renderOrder(order));
         });
       } else {
-        noOrdersMessageEl.style.display = "block";
+        elements.noOrdersMessage.style.display = "block";
       }
     } catch (error) {
       console.error("Failed to fetch orders:", error);
-      ordersListEl.innerHTML =
-        '<p class="error-message">Не удалось загрузить историю заказов. Попробуйте позже.</p>';
+      elements.ordersList.innerHTML =
+        '<p class="error-message">У вас пока нет заказов.</p>';
     }
   }
 
   function initProfilePage() {
-    // Используем getCookie из authUtils.js
-    const token =
-      typeof getCookie === "function"
-        ? getCookie("kurabye_access_token")
-        : null;
+    const token = getCookie("kurabye_access_token");
 
     if (!token) {
-      // Если authUtils.js не подключен или getCookie не определена, или токена нет
-      // Редирект на страницу входа, если пользователь не авторизован
-      // Это дублирует проверку из header-auth-status.js, но полезно как защита самой страницы
-      window.location.href = `/login.html?redirectUrl=${encodeURIComponent(window.location.pathname)}`;
+      console.warn(
+        "No access token found for profile page. Redirecting to login.",
+      );
+      const redirectTarget = encodeURIComponent(
+        window.location.pathname +
+          window.location.search +
+          window.location.hash,
+      );
+      window.location.href = `/login.html?redirectUrl=${redirectTarget}`;
       return;
     }
 
-    const decodedToken = decodeJwtToken(token);
-    const username = decodedToken
-      ? decodedToken.user_name
-      : localStorage.getItem("kurabye_user_name") || "Пользователь";
+    const decodedToken = decodeJwtTokenPayload(token);
 
-    if (profileUsernameEl) {
-      profileUsernameEl.textContent = username;
+    if (decodedToken && decodedToken.user_id) {
+      // Проверяем наличие user_id
+      populateProfileData(decodedToken);
+      fetchUserOrders(token, decodedToken.user_id); // Передаем user_id в fetchUserOrders
+    } else {
+      if (elements.profileDisplayName)
+        elements.profileDisplayName.textContent =
+          "Ошибка: неверный формат токена или отсутствует ID пользователя.";
+      console.error(
+        "Token found but could not be decoded or user_id is missing.",
+      );
+      // Можно добавить редирект на выход или сообщение о необходимости перелогиниться
     }
-
-    fetchUserOrders(token);
   }
 
   initProfilePage();

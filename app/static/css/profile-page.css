@@ -151,7 +151,7 @@
     gap: 15px;
 }
 .header-username {
-    font-weight: 500;
+    font-weight: 700;
     color: var(--primary-text-color);
 }
 .header-logout-btn,
@@ -175,4 +175,49 @@
 .header-basket-link img {
     width: 28px; /* Как в product-detail-tabs */
     height: 28px;
+}
+
+.order-status {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+    text-transform: capitalize; /* Для красивого отображения */
+}
+
+/* Цвета для статусов (можно подобрать более подходящие) */
+.status-pending,
+.status-ожидает-подтверждения {
+    background-color: #e67e22;
+} /* Оранжевый */
+.status-processing,
+.status-в-обработке {
+    background-color: #3498db;
+} /* Синий */
+.status-shipped,
+.status-отправлен {
+    background-color: #2980b9;
+} /* Темно-синий */
+.status-delivered,
+.status-доставлен {
+    background-color: #2ecc71;
+} /* Зеленый */
+.status-cancelled,
+.status-отменен {
+    background-color: #e74c3c;
+} /* Красный */
+.status-unknown,
+.status-статус-неизвестен {
+    background-color: #95a5a6;
+} /* Серый */
+
+.order-address,
+.order-comment-display {
+    font-size: 0.95rem;
+    color: #555;
+}
+.order-comment-display {
+    margin-top: 5px;
+    font-style: italic;
 }
