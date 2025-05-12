@@ -6,7 +6,7 @@ class SubCompositionElement(BaseModel):
 
 
 class CompositionELement(BaseModel):
-    element_id: int
-    name: str
-    is_allergen: bool = Field(default=False)
+    element_id: int | None = None
+    name: str | None = Field(default=None)
+    is_allergen: bool | None = Field(default=False)
     sub_elements: list[SubCompositionElement] | None = None

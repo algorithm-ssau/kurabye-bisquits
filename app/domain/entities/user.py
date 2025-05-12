@@ -3,8 +3,21 @@ from pydantic import BaseModel
 
 class User(BaseModel):
     user_id: int
-    user_name: str
+    login: str
+    name: str
+    last_name: str
+    phone: str
+    role_id: int
 
 
 class UserWithCreds(User):
-    hash_password: str
+    password: str
+
+
+class CreateUser(BaseModel):
+    login: str
+    name: str
+    last_name: str
+    phone: str
+    role_id: int
+    password: str
