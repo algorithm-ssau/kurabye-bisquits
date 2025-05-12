@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Детали Заказа - Печенье Курабье</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/css/header.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+        <link rel="stylesheet" type="text/css" href="/css/profile-page.css" />
+        <link rel="stylesheet" type="text/css" href="/css/order-detail.css" />
+        <!-- Favicons -->
+        <link
+            rel="icon"
+            type="image/png"
+            href="/icon/favicon-96x96.png"
+            sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg" />
+    </head>
+    <body>
+        <header class="he         <header class="header">
+           <ul>
+               <li><a href="/#main">Главная</a></li>
+               <li><a href="/#catalog">Каталог</a></li>
+               <li><a href="/#contacts">Контакты</a></li>
+           </ul>
+           <div class="header-user-actions">
+               <!-- Обновленный блок в хедере -->
+               <a href="/basket.html" class="header-basket-link">
+                   <img
+                       src="/img/cart.svg"
+                       alt="Корзина"
+                       class="cart-icon header-cart-icon"
+                   />
+               </a>
+               <a
+                   href="/profile"
+                   id="headerUsername"
+                   class="header-username"
+                   style="display: none"
+               ></a>
+               <button
+                   id="logoutButton"
+                   class="header-logout-btn"
+                   style="display: none"
+               >
+                   Выйти
+               </button>
+               <a
+                   href="/login"
+                   id="loginLinkHeader"
+                   class="header-login-link"
+                   style="display: none"
+                   >Войти</a
+               >
+           </div>
+       </header>
+        <main class="main">
+        <main class="main order-detail-page-container">
+            <div class="order-detail-header">
+                <h1 id="pageTitle">
+                    Детали Заказа <span id="orderDetailId">#...</span>
+                </h1>
+                <a href="/profile.html" class="back-to-profile-link"
+                    >← Вернуться к моим заказам</a
+                >
+            </div>
+
+            <section
+                id="orderDetailsContent"
+                class="order-content-wrapper"
+                style="display: none"
+            >
+                <div class="order-summary-card">
+                    <h2>Информация о заказе</h2>
+                    <div class="summary-item">
+                        <span class="summary-label">Номер заказа:</span>
+                        <span class="summary-value" id="summaryOrderId"
+                            >---</span
+                        >
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Дата оформления:</span>
+                        <span class="summary-value" id="summaryOrderDate"
+                            >---</span
+                        >
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Статус:</span>
+                        <span
+                            class="summary-value order-status"
+                            id="summaryOrderStatus"
+                            >---</span
+                        >
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Адрес доставки:</span>
+                        <span class="summary-value" id="summaryShippingAddress"
+                            >---</span
+                        >
+                    </div>
+                    <div
+                        class="summary-item"
+                        id="summaryCommentContainer"
+                        style="display: none"
+                    >
+                        <span class="summary-label">Комментарий:</span>
+                        <span class="summary-value" id="summaryOrderComment"
+                            >---</span
+                        >
+                    </div>
+                </div>
+
+                <div class="order-items-card">
+                    <h2>Товары в заказе</h2>
+                    <table class="order-items-table">
+                        <thead>
+                            <tr>
+                                <th>Товар</th>
+                                <th>Цена за шт.</th>
+                                <th>Количество</th>
+                                <th>Сумма</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItemsTableBody">
+                            <!-- Товары будут вставлены сюда -->
+                        </tbody>
+                        <tfoot id="orderItemsTableFooter" style="display: none">
+                            <tr>
+                                <td colspan="3" class="text-right strong">
+                                    Общая стоимость заказа:
+                                </td>
+                                <td class="strong" id="orderTotalAmount">
+                                    0.00 руб
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+            <p id="orderDetailLoadingMessage" class="loading-message">
+                Загрузка деталей заказа...
+            </p>
+            <p
+                id="orderDetailErrorMessage"
+                class="error-message-page"
+                style="display: none"
+            >
+                Не удалось загрузить информацию о заказе.
+            </p>
+        </main>
+
+        <script src="/js/authUtils.js" defer></script>
+        <script src="/js/header-auth-status.js" defer></script>
+        <script src="/js/order-detail.js" defer></script>
+    </body>
+</html>

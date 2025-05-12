@@ -22,7 +22,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def create_jwt(user_data: User, expires_delta: timedelta = timedelta(minutes=DEFAULT_EXPIRE_MINUTES)):
-    to_encode = user_data.dict()
+    user = user_data.dict()
+    user["user_name"] = user["login"]
+    del user["login"]
+    to_encode = user
     expire = datetime.utcnow() + expires_delta
     to_encode["exp"] = expire
     to_encode["user_id"] = user_data.user_id

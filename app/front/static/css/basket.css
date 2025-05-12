@@ -4,7 +4,9 @@ main {
     color: #683c1a;
     font-size: 1.5rem;
 }
-
+.remove-item-btn {
+    color: #683c1a;
+}
 .form-row {
     display: flex;
     justify-content: space-between;

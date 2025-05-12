@@ -155,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Registration form submission
   if (registerFormEl) {
     registerFormEl.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -169,17 +168,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (registerErrorEl) registerErrorEl.style.display = "none";
       if (registerSuccessEl) registerSuccessEl.style.display = "none";
 
-      const usernameInput = registerFormEl.querySelector("#registerUsername");
-      const passwordInput = registerFormEl.querySelector("#registerPassword");
-      const passwordConfirmInput = registerFormEl.querySelector(
-        "#registerPasswordConfirm",
-      );
-
-      const username = usernameInput ? usernameInput.value : "";
-      const password = passwordInput ? passwordInput.value : "";
-      const passwordConfirm = passwordConfirmInput
-        ? passwordConfirmInput.value
-        : "";
+      const login = registerFormEl.login.value;
+      const name = registerFormEl.name.value;
+      const lastName = registerFormEl.last_name.value;
+      const phone = registerFormEl.phone.value;
+      const password = registerFormEl.password.value;
+      const passwordConfirm = registerFormEl.password_confirm.value;
 
       if (password !== passwordConfirm) {
         showAuthMessage(registerErrorEl, ["Пароли не совпадают."]);
@@ -191,8 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const payload = {
-        user_name: username,
+        login: login,
+        name: name,
+        last_name: lastName,
+        phone: phone,
         password: password,
+        role_id: 1,
       };
 
       try {
@@ -205,28 +203,77 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify(payload),
         });
 
-        const data = await response.json();
+        const data = await response.json(); // Получаем ответ от сервера
 
-        if (response.ok) {
-          console.log("Registration successful:", data);
+        if (response.ok && data.access_token) {
+          // <--- ИЗМЕНЕНИЕ ЗДЕСЬ: проверяем наличие access_token
+          console.log("Registration successful, token received:", data);
+
+          // --- АВТОМАТИЧЕСКИЙ ВХОД ПОСЛЕ РЕГИСТРАЦИИ ---
+          const token = data.access_token;
+          const expires = new Date(Date.now() + 3600 * 1000).toUTCString(); // 1 час
+          document.cookie = `kurabye_access_token=${token}; path=/; expires=${expires}; SameSite=Lax; ${window.location.protocol === "https:" ? "Secure;" : ""}`;
+
+          const decodedPayload = decodeJwtPayload(token); // decodeJwtPayload из этого же файла
+          if (decodedPayload) {
+            const displayName =
+              decodedPayload.name && decodedPayload.last_name
+                ? `${decodedPayload.name} ${decodedPayload.last_name}`
+                : decodedPayload.login ||
+                  decodedPayload.user_name ||
+                  "Пользователь";
+            localStorage.setItem("kurabye_user_name", displayName);
+          }
+
+          // showAuthMessage(registerSuccessEl, ["Регистрация прошла успешно! Выполняется вход..."], false); // Можно убрать или изменить
+          // registerFormEl.reset(); // Сбрасываем форму
+
+          // Редирект в личный кабинет или на главную
+          window.location.href = "/profile.html"; // Или '/'
+        } else if (response.ok && !data.access_token) {
+          // Успешная регистрация, но токен не пришел (неожиданно, но обработаем)
+          console.log(
+            "Registration successful, but no token received for auto-login.",
+          );
           showAuthMessage(
             registerSuccessEl,
-            ["Регистрация прошла успешно! Теперь вы можете войти."],
+            [
+              "Регистрация прошла успешно! Теперь вы можете войти через форму входа.",
+            ],
             false,
           );
           registerFormEl.reset();
-          // Optionally, switch to login tab automatically
-          // const loginTabButton = document.querySelector('.auth-tab-btn[data-form="login"]');
-          // if (loginTabButton) loginTabButton.click();
+          // Можно переключить на вкладку входа
+          const loginTabButton = document.querySelector(
+            '.auth-tab-btn[data-form="login"]',
+          );
+          if (loginTabButton) loginTabButton.click();
         } else {
+          // Ошибки валидации или другие серверные ошибки
           let errorMessages = ["Ошибка при регистрации."];
           if (data.detail && Array.isArray(data.detail)) {
             errorMessages = data.detail.map((err) => {
               let fieldName = "Поле";
               if (err.loc && err.loc.length > 1) {
-                if (err.loc[1] === "user_name") fieldName = "Имя пользователя";
-                else if (err.loc[1] === "password") fieldName = "Пароль";
-                else fieldName = err.loc[1];
+                switch (err.loc[1]) {
+                  case "login":
+                    fieldName = "Логин";
+                    break;
+                  case "name":
+                    fieldName = "Имя";
+                    break;
+                  case "last_name":
+                    fieldName = "Фамилия";
+                    break;
+                  case "phone":
+                    fieldName = "Телефон";
+                    break;
+                  case "password":
+                    fieldName = "Пароль";
+                    break;
+                  default:
+                    fieldName = err.loc[1];
+                }
               }
               let msg = err.msg
                 .replace("Value error, ", "")

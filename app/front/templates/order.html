@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Оформление заказа - Печенье Курабье</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/css/header.css" />
+        <link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+        <link rel="stylesheet" type="text/css" href="/css/order.css" />
+        <!-- Твои стили для заказа -->
+        <!-- Favicons -->
+        <link
+            rel="icon"
+            type="image/png"
+            href="/icon/favicon-96x96.png"
+            sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg" />
+    </head>
+    <body>
+        <header class="hea        <header class="header">
+            <ul>
+                <li><a href="/#main">Главная</a></li>
+                <li><a href="/#catalog">Каталог</a></li>
+                <li><a href="/#contacts">Контакты</a></li>
+            </ul>
+            <div class="header-user-actions">
+                <!-- Обновленный блок в хедере -->
+                <a href="/basket.html" class="header-basket-link">
+                    <img
+                        src="/img/cart.svg"
+                        alt="Корзина"
+                        class="cart-icon header-cart-icon"
+                    />
+                </a>
+                <a
+                    href="/profile.html"
+                    id="headerUsername"
+                    class="header-username"
+                    style="display: none"
+                ></a>
+                <button
+                    id="logoutButton"
+                    class="header-logout-btn"
+                    style="display: none"
+                >
+                    Выйти
+                </button>
+                <a
+                    href="/login"
+                    id="loginLinkHeader"
+                    class="header-login-link"
+                    style="display: none"
+                    >Войти</a
+                >
+            </div>
+        </header>
+
+        <main>
+        <main class="main">
+            <!-- Используем твой класс .main -->
+            <div class="form-row">
+                <!-- Твой класс .form-row -->
+                <h1 class="titleOrder">Оформление заказа</h1>
+                <!-- Твой класс .titleOrder -->
+                <img
+                    src="/img/main/bisquit.svg"
+                    class="bisquit"
+                    alt="печенька"
+                />
+                <!-- Твой класс .bisquit -->
+            </div>
+
+            <section class="container" id="orderFormContainer">
+                <!-- Твой класс .container -->
+                <form id="createOrderForm" class="left-part">
+                    <!-- Твой класс .left-part, используем как <form> -->
+                    <div
+                        id="orderFormError"
+                        class="form-message error-message"
+                        style="display: none"
+                    ></div>
+                    <div
+                        id="orderFormSuccess"
+                        class="form-message success-message"
+                        style="display: none"
+                    ></div>
+
+                    <div class="form-row">
+                        <label for="fullName">ФИО</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Иванов Иван Иванович"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-row">
+                        <label for="phone">Телефон</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="+7 (999) 123-45-67"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-row">
+                        <label for="shippingAddress">Адрес доставки</label>
+                        <input
+                            type="text"
+                            id="shippingAddress"
+                            name="shippingAddress"
+                            placeholder="Город, улица, дом, квартира"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-row full-width">
+                        <!-- Твой класс .full-width -->
+                        <label for="orderComment">Комментарий к заказу</label>
+                        <textarea
+                            id="orderComment"
+                            name="orderComment"
+                            rows="3"
+                            placeholder="Пожелания по доставке, домофон и т.д."
+                        ></textarea>
+                    </div>
+                </form>
+
+                <!-- Правая часть .order-info больше не нужна, т.к. информация по заказу убрана -->
+                <!-- <div class="order-info"> ... </div> -->
+            </section>
+            <div class="footer order-submit-footer">
+                <!-- Твой класс .footer -->
+                <button
+                    type="submit"
+                    form="createOrderForm"
+                    id="submitOrderBtn"
+                    class="submit-btn"
+                >
+                    ПОДТВЕРДИТЬ ЗАКАЗ
+                </button>
+            </div>
+        </main>
+
+        <script src="/js/authUtils.js" defer></script>
+        <script src="/js/header-auth-status.js" defer></script>
+        <script src="/js/order-form.js" defer></script>
+    </body>
+</html>
