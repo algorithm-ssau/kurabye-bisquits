@@ -1,15 +1,9 @@
 from abc import ABC, abstractmethod
 
 from domain.entities.cart import Cart
-from domain.entities.order import CreateOrder, Order, UpdateOrder
+from domain.entities.order import CreateOrder, Order, OrderFullInfo, UpdateOrder
 from domain.entities.product import Product, ProductFullInfo
-from schemas.user import UserResponseSchema
-
-
-class AbstractUserRepository(ABC):
-    @abstractmethod
-    def create_user(self, user: UserResponseSchema):
-        pass
+from domain.entities.user import CreateUser, User, UserWithCreds
 
 
 class AbstractProductRepository(ABC):
@@ -50,14 +44,14 @@ class AbstractOrderRepository(ABC):
         pass
 
     @abstractmethod
-    async def get_order(self, order_id: int) -> Order | None:
+    async def get_order(self, order_id: int) -> OrderFullInfo | None:
         pass
 
     @abstractmethod
     async def get_user_orders(
         self,
         user_id: int,
-        status_id: int | None,
+        status_id: int | None = None,
         limit: int = 10,
         offset: int = 0,
     ) -> list[Order] | None:
@@ -80,3 +74,17 @@ class AbstractOrderRepository(ABC):
 
     # TODO: in the future we want see the methods like add "new product into the order"
     #       and "delete products from the order"
+
+
+class AbstractUserRepository(ABC):
+    @abstractmethod
+    async def get_user(self, user_login: str) -> User | None:
+        pass
+
+    @abstractmethod
+    async def get_user_creds(self, user_login: str) -> UserWithCreds | None:
+        pass
+
+    @abstractmethod
+    async def add_user(self, user_data: CreateUser) -> User | None:
+        pass

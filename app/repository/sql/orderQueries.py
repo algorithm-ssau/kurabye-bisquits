@@ -33,6 +33,8 @@ GET_USER_ORDERS = text(
     select
         order_id,
         user_id,
+        shipping_address,
+     	order_comment as comment,
         created_at,
 	status_id
     from "order"
@@ -64,12 +66,29 @@ PLACE_CART_ITEMS_TO_ORDER = text(
 	)
 	on conflict(order_id, product_id)
 	do update set quantity_of_items = excluded.quantity_of_items + order_item.quantity_of_items
-	returning product_id, cart_id
+	returning product_id
     )
-    delete from cart_item where (product_id, cart_id) in (select product_id, cart_id from create_order);
+    delete from cart_item where (product_id, :user_id) in (select product_id, cart_id from create_order);
+
     """
 )
 
+CLEAR_INVENTORY = text(
+    """
+    WITH quantity_order AS
+    (
+        SELECT
+            quantity_of_items,
+            product_id
+        FROM order_item
+        WHERE order_id = :order_id
+    )
+    UPDATE inventory i
+    SET stock_quantity = stock_quantity - qo.quantity_of_items
+    FROM quantity_order qo
+    WHERE i.product_id = qo.product_id;
+    """
+)
 
 GET_ORDER = text(
     """
@@ -79,6 +98,7 @@ GET_ORDER = text(
         o.user_id,
         o.shipping_address,
         os.status_name,
+        os.status_id,
         o.order_comment,
 	jsonb_agg(
 		jsonb_build_object(
@@ -91,13 +111,13 @@ GET_ORDER = text(
 			'quantity_in_order',
 			oi.quantity_of_items
 		)
-	)
+	) as product_list
     from "order" o
     join order_item oi using(order_id)
     join product p using(product_id)
     join order_status os using(status_id)
     where o.order_id = :order_id
-    group by o.order_id, os.status_name;
+    group by o.order_id, os.status_name, os.status_id;
     """
 )
 
@@ -159,5 +179,15 @@ SAFE_DELETE_ORDER = text(
 UPDATE_ORDER_STATUS = text(
     """
     update "order" set status_id = :status_id where order_id = :order_id;
+    """
+)
+
+GET_TOTAL_PRODUCT_QUANTITY = text(
+    """
+    select
+    	sum(stock_quantity) as total_quantity
+    from inventory
+    where product_id = :product_id
+    group by product_id;
     """
 )

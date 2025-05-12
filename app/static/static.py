@@ -34,3 +34,15 @@ async def get_auth_page(request: Request):
 @router.get("/profile", response_class=HTMLResponse)
 async def get_profile_page(request: Request):
     return templates.TemplateResponse("profile.html", {"request": request})
+
+
+@router.get("/order.html", response_class=HTMLResponse)
+@router.get("/order")
+async def get_order_page(request: Request):
+    return templates.TemplateResponse("order.html", {"request": request})
+
+
+@router.get("/order.html/{order_id_path}", response_class=HTMLResponse)
+@router.get("/order/{order_id_path}")
+async def get_same_order_page(order_id_path: int, request: Request):
+    return templates.TemplateResponse("order-detail.html", {"request": request, "order_id": order_id_path})

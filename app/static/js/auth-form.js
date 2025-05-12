@@ -239,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
           } else if (data.detail && typeof data.detail === "string") {
             errorMessages = [data.detail];
           } else if (data.error && data.error.message) {
-            // Another possible error format
             errorMessages = [data.error.message];
           }
           showAuthMessage(registerErrorEl, errorMessages);

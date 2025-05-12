@@ -6,14 +6,22 @@ from pydantic.functional_validators import field_validator
 
 class UserResponseSchema(BaseModel):
     user_id: int
-    user_name: str = Field(min_length=1, max_length=255)
+    login: str
+    name: str
+    last_name: str
+    phone: str
+    role_id: int
 
 
 class UserCreateSchema(BaseModel):
-    user_name: str = Field(min_length=1, max_length=255)
-    password: str = Field(min_length=8)
+    login: str
+    name: str
+    last_name: str
+    phone: str
+    password: str
+    role_id: int
 
-    @field_validator("user_name")
+    @field_validator("name")
     @classmethod
     def check_user_name(cls, user_name, chars=punctuation) -> str:
         # spaces also coulndn't be in the user_name
@@ -35,4 +43,4 @@ class UserCreateSchema(BaseModel):
 
 
 class UserAuthSchema(UserResponseSchema):
-    hashed_password: str = Field(exclude=True, repr=False)
+    password: str = Field(exclude=True, repr=False)

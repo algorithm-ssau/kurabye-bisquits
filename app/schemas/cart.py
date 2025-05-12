@@ -6,7 +6,7 @@ from domain.enums import ProductCalculus
 class AddProductToCartRequest(BaseModel):
     product_id: int
     cart_id: int
-    product_quantity: int = Field(ge=0, default=1)
+    product_quantity: int = Field(default=1)
 
 
 class DeleteProductFromCartRequest(BaseModel):

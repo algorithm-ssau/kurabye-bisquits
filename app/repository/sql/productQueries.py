@@ -26,8 +26,8 @@ SELECT_ALL_RPODUCT_INFORMATION = text(
 	) as composition
     from product
     join md_product using(product_id)
-    join product_composition using(product_id)
-    join ingredient using(ingredient_id)
+    left join product_composition using(product_id)
+    left join ingredient using(ingredient_id)
     where product_id = :product_id
     group by product_id, description, fats, proteins, carbohydrates, grammage;
     """
@@ -36,14 +36,17 @@ SELECT_ALL_RPODUCT_INFORMATION = text(
 SELECT_PRODUCTS = text(
     """
     select
-        product_id,
-        category_id,
-        grammage,
-        product_image,
-        product_name as name,
-        product_price as price
+    	product_id,
+    	category_id,
+    	product_image,
+    	product_name as name,
+    	product_price as price,
+        grammage
     from product
-    order by :order_by
+    join inventory using(product_id)
+    group by product_id
+    having sum(stock_quantity) > 0
+    order by product.product_name
     limit :limit
     offset :offset;
     """

@@ -25,8 +25,10 @@ class DataBaseHelper:
     @asynccontextmanager
     async def get_session_dependency(self):
         async with self.__session_factory() as session:
-            yield session
-            await session.close()
+            try:
+                yield session
+            finally:
+                await session.close()
 
 
 db_helper = DataBaseHelper(DATABASE_URL, ECHO)

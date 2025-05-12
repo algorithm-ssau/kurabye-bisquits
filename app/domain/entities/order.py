@@ -10,7 +10,7 @@ class Order(BaseModel):
     order_id: int
     status_id: int
     user_id: int
-    created_at: datetime
+    created_at: datetime = datetime.now()
     shipping_address: str
     comment: str | None = None
 
@@ -18,8 +18,8 @@ class Order(BaseModel):
 class CreateOrder(BaseModel):
     status_id: int | None
     user_id: int
-    created_at: datetime
-    shipping_adderess: str
+    created_at: datetime = datetime.now()
+    shipping_address: str
     comment: str | None = None
 
 
@@ -30,11 +30,11 @@ class OrderFullInfo(Order):
 class UpdateOrder(BaseModel):
     order_id: int
     status_id: int | None = None
-    shipping_adderess: str | None = None
+    shipping_address: str | None = None
     comment: str | None = None
 
     @model_validator(mode="after")
     def check_at_least_one_field_seted(self):
-        if not any((self.status_id, self.shipping_adderess, self.comment)):
+        if not any((self.status_id, self.shipping_address, self.comment)):
             raise ValueError("At least one value should be setted for update")
         return self
