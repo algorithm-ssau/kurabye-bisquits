@@ -75,6 +75,7 @@ a {
 
 .header-logout-btn,
 .header-login-link {
+    font-weight: 700;
     font-family: "JoNova", sans-serif;
     color: var(--primary-text-color);
     background-color: transparent;
@@ -88,7 +89,7 @@ a {
 }
 
 .header-username {
-    font-weight: 500;
+    font-weight: 700;
     color: var(--primary-text-color);
 }
 .header-logout-btn,
