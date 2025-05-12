@@ -11,7 +11,7 @@ kurabye-bisquits-main/
 │   │       └── endpoints/    # Роутеры для auth, cart, product
 │   ├── core/                 # Основная конфигурация, настройки БД, логирование
 │   ├── domain/               # Бизнес-логика: сущности, перечисления, исключения
-│   ├── models/               # SQLAlchemy модели (предполагается, не предоставлены)
+│   ├── models/               # SQLAlchemy модели
 │   ├── repository/           # Слой доступа к данным (реальные и fake репозитории)
 │   │   └── sql/              # SQL запросы
 │   ├── schemas/              # Pydantic схемы для валидации данных API
