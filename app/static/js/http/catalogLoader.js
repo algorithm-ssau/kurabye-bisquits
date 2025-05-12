@@ -114,11 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
         (p) => p.grammage === currentFilters.grammage,
       );
     }
-    // Add more filters here if needed (e.g., by category, availability)
-    // Example:
-    // if (currentFilters.category) {
-    //     productsToDisplay = productsToDisplay.filter(p => p.category === currentFilters.category);
-    // }
 
     // 2. Apply Sorting
     if (currentSort.by) {
@@ -184,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="product-info-row">
                         <!-- Updated product info display -->
                         <p class="product-info">${product.price.toFixed(2)} руб / ${grammageText}</p>
-                        <img src="/img/cart.svg" alt="add to cart" class="cart-icon" data-product-id="${product.product_id}" />
                     </div>
                 </div>
             `;
