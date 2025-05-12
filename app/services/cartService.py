@@ -13,6 +13,9 @@ class CartService(AbstractCartService):
     async def get_cart(self, cart_id: int) -> Cart | None:
         return await self.__cart_repository.get_cart(cart_id=cart_id)
 
+    async def create_cart(self, cart_id: int) -> bool:
+        return await self.__cart_repository.create_cart(cart_id)
+
     async def add_product_to_cart(self, cart_id: int, product_id: int, product_quantity: int = 1) -> bool:
         # TODO: check that product exists and quantity of product in the warehouse > 0
         return await self.__cart_repository.add_product_to_cart(
