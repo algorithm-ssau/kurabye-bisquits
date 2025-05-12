@@ -124,10 +124,11 @@ GET /get_order: Получение деталей конкретного зак�
 
 | Аватар | Имя | Должность |
 |:------:|:---|:---------|
-| <img src="https://via.placeholder.com/50" alt="Avatar" style="border-radius: 50%;"> | Никулин Иван | TeamLead |
-| <img src="https://via.placeholder.com/50" alt="Avatar" style="border-radius: 50%;"> | Алена Соколова | Дизайнер интерфейсов, frontend разработчик |
-| <img src="https://via.placeholder.com/50" alt="Avatar" style="border-radius: 50%;"> | Денис Мотяков | Backend разработчик, разработчик баз данных |
-| <img src="https://via.placeholder.com/50" alt="Avatar" style="border-radius: 50%;"> | Телегин Андрей | Тестировщик (QA), Backend разработчик |
+| <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/van.jpg"  alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Никулин Иван | TeamLead |
+| <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/alena.jpg" alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Алена Соколова | Дизайнер интерфейсов, frontend разработчик |
+| <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/denis1.jpg" alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Денис Мотяков | Backend разработчик, разработчик баз данных |
+| <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/andrey.png" style="border-radius: 20px; width: 200px; height: 200px;"> | Телегин Андрей | Тестировщик (QA), Backend разработчик |
 
 ### О нас
-Мы любим решать сложные задачи, пить кофе и создавать продукты, которые вдохновляют. Если вы хотите узнать больше о нашем проекте, пишите нам или присоединяйтесь к нашей миссии! 😎
+ЭВМ за 3 три дня
+####  ZZZZ 🇷🇺🇷🇺🇷🇺🇷🇺🇷🇺 ZZZZ
