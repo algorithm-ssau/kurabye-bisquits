@@ -31,7 +31,7 @@ kurabye-bisquits-main/
 ## 🛠️ Технологический стек
 
 *   **Бэкенд:**
-    *   Python 3.11+
+    *   Python 3.13+
     *   FastAPI
     *   SQLAlchemy (асинхронный режим с AsyncPG)
     *   PostgreSQL
