@@ -1,3 +1,4 @@
+import jwt
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
@@ -20,16 +21,7 @@ log = log_setting.get_configure_logging(filename=__name__)
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
-
-fake_users_db = {
-    "johndoe": {
-        "user_id": 1,
-        "user_name": "johndoe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$WAoK9tsSsUmLD2RF6smKt.4w9CfRRXE2WsztXzRBlgATIsQTKe.F.",
-    }
-}
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/auth/token")
 
 
 # get user data

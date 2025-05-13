@@ -46,3 +46,9 @@ async def get_order_page(request: Request):
 @router.get("/order/{order_id_path}")
 async def get_same_order_page(order_id_path: int, request: Request):
     return templates.TemplateResponse("order-detail.html", {"request": request, "order_id": order_id_path})
+
+
+@router.get("/admin/", response_class=HTMLResponse)
+@router.get("/admin/")
+async def get_admin_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request})

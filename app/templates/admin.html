@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Админ-панель - Печенье Курабье</title>
+
+        <link
+            rel="icon"
+            type="image/png"
+            href="icon/favicon-96x96.png"
+            sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="icon/favicon.svg" />
+        <link rel="shortcut icon" href="icon/favicon.ico" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="icon/apple-touch-icon.png"
+        />
+        <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" href="css/admin/admin.css" />
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="header-title">Админ-панель</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" data-section="products">Продукты</a></li>
+                    <li><a href="#" data-section="inventory">Инвентарь</a></li>
+                    <li><a href="#" data-section="orders">Заказы</a></li>
+                </ul>
+            </nav>
+            <button id="logoutButton" class="header-logout-btn">Выйти</button>
+        </header>
+
+        <main class="main">
+            <section id="products" class="section">
+                <h2>Управление продуктами</h2>
+                <div class="filters">
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                            Сортировка
+                            <img src="img/sort.svg" alt="иконка сортировки" />
+                        </button>
+                        <div class="dropdown-content">
+                            <a
+                                href="#"
+                                data-sort-by="price"
+                                data-sort-order="asc"
+                                >По цене (возр.)</a
+                            >
+                            <a
+                                href="#"
+                                data-sort-by="price"
+                                data-sort-order="desc"
+                                >По цене (убыв.)</a
+                            >
+                            <a
+                                href="#"
+                                data-sort-by="name"
+                                data-sort-order="asc"
+                                >По названию (А-Я)</a
+                            >
+                            <a
+                                href="#"
+                                data-sort-by="name"
+                                data-sort-order="desc"
+                                >По названию (Я-А)</a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="product-grid"></div>
+                <div class="load-more-container">
+                    <button id="loadMoreProducts" class="load-more-btn">
+                        Загрузить еще
+                    </button>
+                </div>
+            </section>
+
+            <section id="inventory" class="section" style="display: none">
+                <h2>Управление инвентарем</h2>
+                <form id="addInventoryForm" class="inventory-form">
+                    <input
+                        type="number"
+                        name="product_id"
+                        placeholder="ID продукта"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="warehouse_id"
+                        placeholder="ID склада"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="stock_quantity"
+                        placeholder="Количество"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="warehouse_name"
+                        placeholder="Название склада"
+                    />
+                    <button type="submit" class="submit-btn">
+                        Добавить/Обновить
+                    </button>
+                </form>
+                <div class="inventory-list"></div>
+            </section>
+
+            <section id="orders" class="section" style="display: none">
+                <h2>Управление заказами</h2>
+                <div class="filters">
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                            Сортировка
+                            <img src="img/sort.svg" alt="иконка сортировки" />
+                        </button>
+                        <div class="dropdown-content">
+                            <a
+                                href="#"
+                                data-sort-by="created_at"
+                                data-sort-order="asc"
+                                >По дате (возр.)</a
+                            >
+                            <a
+                                href="#"
+                                data-sort-by="created_at"
+                                data-sort-order="desc"
+                                >По дате (убыв.)</a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="order-list"></div>
+                <div class="load-more-container">
+                    <button id="loadMoreOrders" class="load-more-btn">
+                        Загрузить еще
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3>Редактировать продукт</h3>
+                <form id="editProductForm">
+                    <input type="hidden" name="product_id" />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Название"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="product_image"
+                        placeholder="URL изображения"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="Цена"
+                        step="0.01"
+                        required
+                    />
+                    <select name="calculus">
+                        <option value="IN_GRAMS">В граммах</option>
+                        <option value="IN_PACKAGES">В упаковках</option>
+                    </select>
+                    <input
+                        type="number"
+                        name="grammage"
+                        placeholder="Граммовка"
+                    />
+                    <textarea
+                        name="description"
+                        placeholder="Описание"
+                    ></textarea>
+                    <input
+                        type="text"
+                        style="display: none"
+                        name="composition"
+                        placeholder="Состав (через запятую)"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="energy"
+                        placeholder="Энергия (кКал/100г)"
+                        required
+                    />
+                    <input type="number" name="fats" placeholder="Жиры" />
+                    <input
+                        type="number"
+                        name="carbohydrates"
+                        placeholder="Углеводы"
+                    />
+                    <input type="number" name="proteins" placeholder="Белки" />
+                    <label
+                        ><input type="checkbox" name="is_active" checked />
+                        Активен</label
+                    >
+                    <button type="submit" class="submit-btn">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/admin/admin.js"></script>
+    </body>
+</html>

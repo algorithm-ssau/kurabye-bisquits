@@ -10,7 +10,6 @@ function getCookie(name) {
 }
 
 function decodeJwtTokenPayload(token) {
-  // Эта функция уже должна быть в auth-form.js или profile-page.js
   if (!token) return null;
   try {
     const base64Url = token.split(".")[1];
