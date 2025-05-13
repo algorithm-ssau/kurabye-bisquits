@@ -8,7 +8,7 @@ kurabye-bisquits-main/
 ├── app/
 │   ├── api/                  # API эндпоинты
 │   │   └── v1/               # v1 версия эндпоитнов
-│   │       └── endpoints/    # Роутеры для auth, cart, product
+│   │       └── endpoints/    # Роутеры для auth, cart, product, admin
 │   ├── core/                 # Основная конфигурация, настройки БД, логирование
 │   ├── domain/               # Бизнес-логика: сущности, перечисления, исключения
 │   ├── models/               # SQLAlchemy модели
