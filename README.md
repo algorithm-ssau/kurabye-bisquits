@@ -123,7 +123,7 @@ GET /get_order: Получение деталей конкретного зак�
 | Аватар | Имя | Должность |
 |:------:|:---|:---------|
 | <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/van.jpg"  alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Никулин Иван | TeamLead |
-| <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/alena.jpg" alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Алена Соколова | Дизайнер интерфейсов, frontend разработчик |
+| <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/alena.jpg" alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Алёна Соколова | Дизайнер интерфейсов, frontend разработчик |
 | <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/denis1.jpg" alt="Avatar" style="border-radius: 20px; width: 200px; height: 200px;"> | Денис Мотяков | Backend разработчик, разработчик баз данных |
 | <img src="https://github.com/algorithm-ssau/kurabye-bisquits/blob/main/app/static/img/andrey.png" style="border-radius: 20px; width: 200px; height: 200px;"> | Телегин Андрей |  Fullstack разработчик |
 
